@@ -459,7 +459,7 @@ window.CAPITULOS.push({
 <tr><td>Paso diametral</td><td><span>$P_d = \dfrac{z}{D_p[\text{pulg}]}$</span></td><td>Equivalencia</td><td><span>$P_d\cdot m = 25{,}4$</span></td></tr>
 <tr><td>Addendo</td><td><span>$a = m$</span></td><td>Paso circular</td><td><span>$p_c = \pi m$</span></td></tr>
 <tr><td>Dedendo</td><td><span>$b = 1{,}25\,m$</span></td><td>Huelgo</td><td><span>$h_c = \dfrac{p_c}{50}$</span></td></tr>
-<tr><td>Altura total</td><td><span>$h_t = 2{,}25\,m$</span></td><td>Espesor / vacío</td><td><span>$t = (p_c-h_c)/2$</span> · <span>$v = p_c - t$</span></td></tr>
+<tr><td>Altura total</td><td><span>$h_t = 2{,}25\,m$</span></td><td>Espesor / vacío (v)</td><td><span>$t = (p_c-h_c)/2$</span> · <span>$v = p_c - t$</span></td></tr>
 <tr><td>Primitivo</td><td><span>$D_p = m\,z$</span></td><td>Exterior</td><td><span>$d_e = D_p + 2m$</span></td></tr>
 <tr><td>Raíz</td><td><span>$d_i = D_p - 2{,}5m$</span></td><td>Base</td><td><span>$D_b = D_p\cos\varphi$</span></td></tr>
 <tr><td>Centros</td><td><span>$C = \dfrac{m(z_1+z_2)}{2}$</span></td><td>Relación</td><td><span>$i = \dfrac{z_2}{z_1} = \dfrac{n_1}{n_2}$</span></td></tr>
@@ -583,3 +583,4 @@ window.CAPITULOS.push({
 </div>
 `
 });
+

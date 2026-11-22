@@ -534,6 +534,8 @@ details.tri-aux-mini[open]>summary{color:var(--txt);border-bottom:1px solid var(
 /* las que no son triángulo: tarjetas más anchas para que entren las fórmulas */
 details.tri-aux .grid2{grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
 details.tri-aux .grid2 .mini{min-width:0}
+/* el filtro esconde tarjetas y grupos: que no dejen huecos */
+#tri-notri [hidden]{display:none!important}
 /* cartel con el significado de la variable elegida */
 .tri-que{
   display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap;

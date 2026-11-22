@@ -120,11 +120,15 @@ Si preferís subir la carpeta tal cual, la URL será
   categoría (con el conteo en la cabecera) hasta elegir una variable o tocar **Ver todos**. Todo lo que es
   referencia —las reglas y el «cómo se lee», el porqué de los triángulos de suma, la chuleta de constantes y
   el checklist— va **plegado**, para que por defecto solo se vean los triángulos. Al imprimir se abre solo
-  y el capítulo sale en blanco y negro (12 páginas).
-  Además incluye un bloque plegado con **las fórmulas que no son triángulo, ya despejadas** (K<sub>v</sub>,
-  V en m/s, módulo por raíz cúbica, z<sub>mín</sub>, S<sub>t</sub>, L<sub>ab</sub>, tren coaxial, Willis con
-  sus tres casos, z de la corona, par con rendimiento, cónicos, sin fin y helicoidales), para poder resolver
-  cualquier ejercicio sin salir de la sección.
+  y el capítulo sale en blanco y negro (13 páginas).
+  Además incluye un bloque plegado con **las fórmulas que no son triángulo, ya despejadas** (24 tarjetas:
+  K<sub>v</sub> con sus cuatro tallados, V en m/s, módulo por raíz cúbica con H y S<sub>adm</sub> despejados,
+  z<sub>mín</sub>, espesor y vacío del diente, diente recortado, las cuatro S<sub>t</sub>, L<sub>ab</sub>, tren
+  coaxial, Willis con sus tres casos, z de la corona, par con rendimiento, cónicos, sin fin, helicoidales
+  con su relación de contacto y **las cuatro W** (tangencial, radial, axial y resultante total). **El filtro por variable también filtra ese bloque**: al tocar una variable se
+  abre solo con las fórmulas que la contienen, con el conteo en la cabecera y sin salir de la sección.
+  Notación cuidada: **V** (mayúscula) es la velocidad tangencial [m/s] y **v** (minúscula) el vacío del diente
+  [mm]; ese aviso está en las reglas, en el formulario y en la teoría, y la calculadora muestra las dos filas.
 - **Tablas que se apilan en el celular**: en pantallas chicas las tablas de fórmulas del formulario y la de
   nomenclatura de la portada se convierten en tarjetas (título, fórmula y observación), sin scroll horizontal.
 - **Buscador** de temas, fórmulas y secciones (atajo: `/`).

@@ -276,6 +276,7 @@ window.CAPITULOS.push({
 
 <p>Con el huelgo definido, el espesor del diente y el ancho del espacio se reparten el paso:</p>
 <div class="f">$$ t = \frac{p_c - h_c}{2} \qquad\qquad v = p_c - t \qquad\qquad t + v = p_c $$</div>
+<p class="aviso"><strong>No confundir las dos uves:</strong> <span>$v$</span> (minúscula) es el <strong>vacío del diente</strong>, en mm; <span>$V$</span> (mayúscula) es la <strong>velocidad tangencial</strong>, en m/s ($V = \pi D_p n/60\,000$).</p>
 
 <div class="resultado"><span class="r-lbl">Con m = 6 mm:</span> <span class="r-val">p<sub>c</sub> = 18,850 mm · h<sub>c</sub> = 0,377 mm · t = 9,236 mm · v = 9,613 mm</span></div>
 

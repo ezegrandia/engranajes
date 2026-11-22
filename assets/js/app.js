@@ -497,7 +497,8 @@
         di1 = dp1 - 2 * b, di2 = dp2 - 2 * b,
         db1 = dp1 * Math.cos(fi), db2 = dp2 * Math.cos(fi),
         C = (dp1 + dp2) / 2, i = z2 / z1, n2 = n1 / i,
-        pb = pc * Math.cos(fi);
+        pb = pc * Math.cos(fi),
+        V = Math.PI * dp1 * n1 / 60000;
       var filas = [
         ["Módulo", "m", num(m, 2) + " mm"], ["Paso circular", "p_c = π·m", num(pc, 3) + " mm"],
         ["Paso de base", "p_b = p_c·cos φ", num(pb, 3) + " mm"],
@@ -505,7 +506,7 @@
         ["Altura total", "h_t = 2,25·m", num(ht, 2) + " mm"],
         ["Huelgo", "h_c = p_c/50", num(hc, 3) + " mm"],
         ["Espesor", "t = (p_c−h_c)/2", num(t, 3) + " mm"],
-        ["Vacío", "v = p_c−t", num(v, 3) + " mm"],
+        ["Vacío (v)", "v = p_c−t", num(v, 3) + " mm"],
         ["D primitivo piñón", "D_p1 = m·z₁", num(dp1, 2) + " mm"],
         ["D primitivo rueda", "D_p2 = m·z₂", num(dp2, 2) + " mm"],
         ["D exterior piñón", "d_e1 = D_p1+2a", num(de1, 2) + " mm"],
@@ -516,7 +517,8 @@
         ["D base rueda", "D_b2 = D_p2·cos φ", num(db2, 2) + " mm"],
         ["Distancia entre centros", "C = (D_p1+D_p2)/2", num(C, 2) + " mm"],
         ["Relación de transmisión", "i = z₂/z₁", num(i, 4)],
-        ["Velocidad de salida", "n₂ = n₁/i", num(n2, 1) + " rpm"]
+        ["Velocidad de salida", "n₂ = n₁/i", num(n2, 1) + " rpm"],
+        ["Velocidad tangencial (V)", "V = π·D_p1·n₁/60 000", num(V, 3) + " m/s"]
       ];
       sal.innerHTML = '<div class="tabla-wrap" style="margin:0"><table class="tec compacta"><tbody>' +
         filas.map(function (f) {

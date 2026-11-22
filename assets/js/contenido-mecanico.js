@@ -481,7 +481,7 @@ window.CAPITULOS.push({
 <tr><td>Paso</td><td><span>$p_c = \pi m$</span> · <span>$p_b = p_c\cos\varphi$</span></td><td>—</td></tr>
 <tr><td>Torque</td><td><span>$T = \dfrac{H}{\omega}$</span> con <span>$\omega = \dfrac{2\pi n}{60}$</span></td><td>H en W; 1 HP = 745 W</td></tr>
 <tr><td>Fuerza tangencial</td><td><span>$W_t = \dfrac{2T}{D_p}$</span></td><td>Radio = D<sub>p</sub>/2</td></tr>
-<tr><td>Fuerzas radial y total</td><td><span>$W_r = W_t\tan\varphi$</span> · <span>$W = W_t/\cos\varphi$</span></td><td>W &gt; W<sub>t</sub></td></tr>
+<tr><td>Fuerzas radial y resultante (W)</td><td><span>$W_r = W_t\tan\varphi$</span> · <span>$W = \dfrac{W_t}{\cos\varphi} = \sqrt{W_t^2+W_r^2}$</span></td><td>W &gt; W<sub>t</sub>; W<sub>a</sub> es axial</td></tr>
 <tr><td>Tensión de Lewis</td><td><span>$\sigma = \dfrac{K_v\,W_t}{F\,m\,Y}$</span></td><td>F y m en mm → MPa</td></tr>
 <tr><td>Factor dinámico</td><td>Según tallado (4 fórmulas)</td><td>V en m/s</td></tr>
 <tr><td>Tensión admisible</td><td><span>$S_t = 0{,}749 H_B + 110$</span> (4140 grado 2)</td><td>Ojo qué gráfica</td></tr>
@@ -517,6 +517,7 @@ window.CAPITULOS.push({
 </tbody>
 </table>
 </div>
+<p class="aviso"><strong>V y v no son lo mismo:</strong> <span>$V$</span> (mayúscula) es la <strong>velocidad tangencial</strong> [m/s]; <span>$v$</span> (minúscula) es el <strong>vacío del diente</strong> [mm].</p>
 
 <h2>Helicoidales, cónicos y sin fin</h2>
 <div class="tabla-wrap t-form">

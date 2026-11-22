@@ -38,6 +38,7 @@ window.CAPITULOS = window.CAPITULOS || [];
     Pd:    ["<i>P</i><sub>d</sub>", "paso diametral", "1/pulg"],
     F:     ["<i>F</i>", "ancho de cara del diente", "mm"],
     hc:    ["<i>h</i><sub>c</sub>", "huelgo circular (juego)", "mm"],
+    t:     ["<i>t</i>", "espesor del diente (arco)", "mm"],
     phi:   ["<i>φ</i>", "ángulo de presión", "°"],
     psi:   ["<i>ψ</i>", "ángulo de hélice", "°"],
     gam:   ["<i>γ</i>", "ángulo primitivo del cono", "°"],
@@ -51,7 +52,8 @@ window.CAPITULOS = window.CAPITULOS || [];
     nsol:  ["<i>n</i><sub>solar</sub>", "velocidad del solar", "rpm"],
     nps:   ["<i>n</i><sub>ps</sub>", "velocidad del brazo portasatélites", "rpm"],
     w:     ["<i>ω</i>", "velocidad angular", "rad/s"],
-    v:     ["<i>v</i>", "velocidad tangencial", "m/s"],
+    v:     ["<i>V</i>", "velocidad tangencial", "m/s"],
+    vac:   ["<i>v</i>", "vacío del diente", "mm"],
     r:     ["<i>r</i>", "radio primitivo (D<sub>p</sub>/2), en metros", "m"],
     H:     ["<i>H</i>", "potencia", "W"],
     T:     ["<i>T</i>", "par (torque)", "N·m"],
@@ -68,6 +70,7 @@ window.CAPITULOS = window.CAPITULOS || [];
     Kv:    ["<i>K</i><sub>v</sub>", "factor dinámico", "—"],
     sig:   ["<i>σ</i>", "tensión de flexión (Lewis)", "MPa"],
     St:    ["<i>S</i><sub>t</sub>", "resistencia a la fatiga del material", "MPa"],
+    HB:    ["<i>H</i><sub>B</sub>", "dureza Brinell del material", "HB"],
     fseg:  ["<i>f</i><sub>seg</sub>", "factor de seguridad", "—"],
     Y:     ["<i>Y</i>", "factor de forma de Lewis", "—"],
     Lab:   ["<i>L</i><sub>ab</sub>", "longitud de la línea de acción", "mm"],
@@ -104,7 +107,7 @@ window.CAPITULOS = window.CAPITULOS || [];
     "Rendimiento": { v: ["Ps", "Pe", "eta"] },
     "HP → watt": { v: ["Wpot", "HP"], star: 1 },
     "Fuerza radial": { v: ["Wr", "Wt", "phi"] },
-    "Fuerza normal": { v: ["Wt", "Wn", "phi"] },
+    "Fuerza normal (W total)": { v: ["Wt", "Wn", "phi"] },
     "Factor de seguridad": { v: ["St", "fseg", "sig"], star: 1 },
     "Lewis: tensión": { v: ["Kv", "Wt", "sig", "F", "m", "Y"], star: 1 },
     "Lewis: despejar F": { v: ["Kv", "Wt", "F", "sig", "m", "Y"] },
@@ -257,20 +260,27 @@ window.CAPITULOS = window.CAPITULOS || [];
   }
 
   /* ---------- las fórmulas que NO son triángulo (con el despeje hecho) ---------- */
+  function clavesDe(ids) {
+    return ids.split(/\s+/).map(function (id) {
+      var v = VARS[id];
+      return v ? clave(v[0]) : "";
+    }).filter(Boolean).join(" ");
+  }
+
   function seccionNoTri() {
-    return '<details class="tri-aux" id="tri-notri">' +
-      '<summary>Las que no son triángulo, con el despeje hecho<span class="no-print"> — tocá para abrir</span></summary>' +
+    var html = '<details class="tri-aux" id="tri-notri">' +
+      '<summary><span class="notri-tit">Las que no son triángulo, con el despeje hecho</span><span class="no-print"> — tocá para abrir</span></summary>' +
       '<div class="details-cuerpo">' +
       String.raw`
 <div class="caja idea">
 <p class="caja-tit">Cuándo venís acá</p>
 <p>Si la fórmula tiene una <strong>suma o resta</strong>, una <strong>raíz</strong>, una <strong>potencia</strong> o <strong>más de tres letras</strong>, no hay triángulo que la resuelva: está acá, ya despejada. Todo lo que es solo producto y cociente vive en los 42 triángulos de arriba.</p>
-<p class="aviso">No hace falta memorizar estas: alcanza con saber que existen y dónde están.</p>
+<p class="aviso">No hace falta memorizar estas: alcanza con saber que existen y dónde están. Y el <strong>filtro de arriba también trabaja acá</strong>: si tocás una variable, este bloque se abre solo con las fórmulas que la usan.</p>
 </div>
 
 <h3>1 · Cálculo mecánico (Lewis y dimensionado)</h3>
 
-<div class="mini">
+<div class="mini" data-ids="Kv v">
 <h4>Factor dinámico K<sub>v</sub> — la fila va según el tallado</h4>
 <div class="tabla-wrap">
 <table class="tec compacta">
@@ -288,32 +298,56 @@ window.CAPITULOS = window.CAPITULOS || [];
 
 <div class="grid2">
 
-<div class="mini">
+<div class="mini" data-ids="v">
 <h4>Velocidad para K<sub>v</sub></h4>
 <div class="f">$$V = \frac{\pi\,D_p\,n}{60\,000} = \omega\,r$$</div>
-<p>D<sub>p</sub> en mm, n en rpm, r en <strong>metros</strong>. Es la misma que el triángulo $v=\omega r$, pero directa desde D<sub>p</sub> y n.</p>
+<p>D<sub>p</sub> en mm, n en rpm, r en <strong>metros</strong>. Es la misma que el triángulo $V=\omega r$, pero directa desde D<sub>p</sub> y n.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="m H Kv w z1 Y F St">
 <h4>Módulo por raíz cúbica</h4>
 <div class="f">$$m = \sqrt[3]{\frac{2000\,H\,K_v}{\omega\,z_1\,k\,Y\,S_{adm}}}$$</div>
-<div class="f">$$H = \frac{\omega\,z_1\,k\,Y\,S_{adm}\,m^3}{2000\,K_v} \qquad S_{adm} = \frac{2000\,H\,K_v}{\omega\,z_1\,k\,Y\,m^3}$$</div>
+<div class="f">$$H = \frac{\omega\,z_1\,k\,Y\,S_{adm}\,m^3}{2000\,K_v}$$</div>
+<div class="f">$$S_{adm} = \frac{2000\,H\,K_v}{\omega\,z_1\,k\,Y\,m^3}$$</div>
 <p>Con $k = F/m \approx 9{,}5$.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="z phi">
 <h4>Dientes mínimo (interferencia)</h4>
 <div class="f">$$z_{mín} = \frac{2}{\operatorname{sen}^2\varphi}$$</div>
 <p>Con φ = 20°: <strong>z<sub>mín</sub> = 17</strong> (15 con corrección). Si z &lt; z<sub>mín</sub>, el diente sale con interferencia.</p>
 </div>
 
-<div class="mini">
-<h4>Tensión admisible</h4>
-<div class="f">$$S_t = 0{,}749\,H_B + 110$$</div>
-<p>4140 grado 2. Al revés: <span>$H_B = \dfrac{S_t - 110}{0{,}749}$</span>.</p>
+<div class="mini" data-ids="t vac pc hc">
+<h4>Espesor del diente y vacío</h4>
+<div class="f">$$t = \frac{p_c - h_c}{2} \qquad v = p_c - t$$</div>
+<p>Se cumple <span>$t + v = p_c$</span>. Si el enunciado da el juego lateral, sale de acá: es una resta, no hay triángulo.</p>
+<p class="aviso">Esta <strong>v es minúscula</strong> (vacío, en mm): no es la <strong>V</strong> de velocidad tangencial (m/s).</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="m ht">
+<h4>Diente recortado (20° corto)</h4>
+<div class="f">$$a = 0{,}8\,m \qquad b = m \qquad h_t = 1{,}8\,m$$</div>
+<p>Con eso quedan <span>$d_e = D_p + 1{,}6m$</span> y <span>$d_i = D_p - 2m$</span>. El diente normal es $a=m$, $b=1{,}25m$, $h_t=2{,}25m$.</p>
+</div>
+
+<div class="mini" data-ids="St HB">
+<h4>Tensión admisible S<sub>t</sub></h4>
+<div class="tabla-wrap">
+<table class="tec compacta">
+<thead><tr><th>Material / grado</th><th>S<sub>t</sub> [MPa]</th></tr></thead>
+<tbody>
+<tr><td>Acero endurecido g1</td><td><span>$0{,}533\,H_B + 88{,}3$</span></td></tr>
+<tr><td>Acero endurecido g2</td><td><span>$0{,}703\,H_B + 113$</span></td></tr>
+<tr><td>4140 nitrurado g1</td><td><span>$0{,}568\,H_B + 83{,}8$</span></td></tr>
+<tr><td>4140 nitrurado g2</td><td><span>$0{,}749\,H_B + 110$</span></td></tr>
+</tbody>
+</table>
+</div>
+<p>Si te dan S<sub>t</sub> y piden la dureza: <span>$H_B = \dfrac{S_t - 110}{0{,}749}$</span> (4140 g2).</p>
+</div>
+
+<div class="mini" data-ids="Lab de Db C phi">
 <h4>Línea de acción y relación de contacto</h4>
 <div class="f">$$L_{ab} = \sqrt{R_{e1}^2-R_{b1}^2}+\sqrt{R_{e2}^2-R_{b2}^2}-C\operatorname{sen}\varphi$$</div>
 <p>Después <span>$m_c = \dfrac{L_{ab}}{p_b}$</span> (eso sí es triángulo). Se pide $m_c \ge 1{,}2$.</p>
@@ -324,19 +358,19 @@ window.CAPITULOS = window.CAPITULOS || [];
 <h3>2 · Trenes, planetarios y reductores</h3>
 <div class="grid2">
 
-<div class="mini">
+<div class="mini" data-ids="m zsum">
 <h4>Tren coaxial (dos etapas)</h4>
 <div class="f">$$m_A(z_1+z_2) = m_B(z_3+z_4)$$</div>
 <p>Los dos pares comparten eje: la suma de radios tiene que dar igual. De acá sale el módulo o el diente que falte.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="ne ns nps i">
 <h4>Willis (planetario)</h4>
 <div class="f">$$\frac{n_e-n_{ps}}{n_s-n_{ps}} = i_0 = \pm\frac{\prod z_c}{\prod z_m}$$</div>
 <p>Se resuelve con el <strong>método tabular</strong> de 3 filas. i<sub>0</sub> es con el brazo fijo.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="nps nsol">
 <h4>Los tres casos de Willis</h4>
 <p><strong>Corona fija</strong></p>
 <div class="f">$$n_{ps} = n_{solar}\,\frac{z_s}{z_s+z_c}$$</div>
@@ -346,19 +380,19 @@ window.CAPITULOS = window.CAPITULOS || [];
 <div class="f">$$\frac{n_{solar}}{n_{corona}} = -\frac{z_c}{z_s}$$</div>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="zs zcCor">
 <h4>Corona del planetario</h4>
 <div class="f">$$z_c = z_s + 2\,z_{sat}$$</div>
 <p>Con doble satélite en serie: <span>$z_c = z_s + 2(z_3+z_4)$</span>. Es la verificación del dibujo.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="Ts Te i eta">
 <h4>Par y potencia con rendimiento</h4>
 <div class="f">$$T_s = T_e\,i\,\eta \qquad H_s = H_e\,\eta$$</div>
 <p>Con n etapas: η<sup>n</sup> (una por par). El rendimiento <strong>no</strong> cambia la velocidad, solo el par y la potencia.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="i">
 <h4>Relación total del reductor</h4>
 <div class="f">$$i_{total} = i_1\cdot i_2\cdots i_n$$</div>
 <p>En un tren simple la rueda loca no cambia i (solo el sentido). El sentido se cuenta aparte: una inversión por par exterior.</p>
@@ -369,25 +403,25 @@ window.CAPITULOS = window.CAPITULOS || [];
 <h3>3 · Cónicos</h3>
 <div class="grid2">
 
-<div class="mini">
+<div class="mini" data-ids="gam">
 <h4>Ángulo del otro cono</h4>
 <div class="f">$$\Gamma = \Sigma - \gamma$$</div>
 <p>Con ejes a 90°: <strong>Γ = 90° − γ</strong>. γ sale de $\tan\gamma = z_1/z_2$ (triángulo).</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="Dp F gam">
 <h4>Radios de base y medio</h4>
 <div class="f">$$r_b = \frac{D_p}{2\cos\gamma} \qquad r_m = r-\frac{F}{2}\operatorname{sen}\gamma$$</div>
 <p>r<sub>b</sub> para la línea de acción; r<sub>m</sub> para las fuerzas en el diente medio.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="F Ao">
 <h4>Ancho de cara máximo</h4>
 <div class="f">$$F \le \frac{A_o}{3}$$</div>
 <p>A<sub>o</sub> es la distancia exterior del cono (triángulo). Si F no cumple, achicá F.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="Wr Wa Wt phi gam">
 <h4>Fuerzas en el cónico</h4>
 <div class="f">$$W_r = W_t\tan\varphi\cos\gamma$$</div>
 <div class="f">$$W_a = W_t\tan\varphi\operatorname{sen}\gamma$$</div>
@@ -399,19 +433,19 @@ window.CAPITULOS = window.CAPITULOS || [];
 <h3>4 · Tornillo sin fin</h3>
 <div class="grid2">
 
-<div class="mini">
+<div class="mini" data-ids="px z1 Dp1">
 <h4>Ángulo de hélice</h4>
 <div class="f">$$\beta = \arctan\frac{\pi\,D_{p1}}{p_x\,z_1} \qquad \lambda = 90^\circ-\beta$$</div>
 <p>D<sub>p1</sub> del tornillo, p<sub>x</sub> paso axial y z<sub>1</sub> entradas.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="Dp2 z2">
 <h4>Diámetro de la corona</h4>
 <div class="f">$$D_{p2} = \frac{p}{\pi}\,z_2$$</div>
 <p>p = paso circular de la corona. Con $p = \pi m_n$ queda $D_{p2} = m_n\,z_2$.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="eta phi">
 <h4>Rendimiento del sin fin</h4>
 <div class="f">$$\eta = \frac{\cos\varphi_n-\mu\tan\lambda}{\cos\varphi_n+\mu\cot\lambda}$$</div>
 <p>μ = coeficiente de roce (0,05–0,1). Típico 60–80 %. No es triángulo: se calcula completo.</p>
@@ -422,16 +456,49 @@ window.CAPITULOS = window.CAPITULOS || [];
 <h3>5 · Helicoidales</h3>
 <div class="grid2">
 
-<div class="mini">
+<div class="mini" data-ids="C mn zsum psi">
 <h4>Distancia entre centros</h4>
 <div class="f">$$C = \frac{m_n(z_1+z_2)}{2\cos\psi}$$</div>
 <p>Con ψ = 0 volvés al caso recto.</p>
 </div>
 
-<div class="mini">
+<div class="mini" data-ids="phi psi">
 <h4>Ángulo de presión transversal</h4>
 <div class="f">$$\tan\varphi_t = \frac{\tan\varphi_n}{\cos\psi}$$</div>
 <p>El normal es el de la fresa (20°); el transversal es el que se ve en el plano de giro.</p>
+</div>
+
+<div class="mini" data-ids="mc F psi">
+<h4>Relación de contacto helicoidal</h4>
+<div class="f">$$m_{hel} = m_c + \frac{F\tan\psi}{p_t}$$</div>
+<p>Al contacto del plano transversal se le suma el axial. F es el ancho de cara, ψ la hélice y $p_t$ el paso transversal ($p_t = \pi m_t$).</p>
+</div>
+
+</div>
+
+<h3>6 · Fuerzas: las cuatro W</h3>
+<div class="grid2">
+
+<div class="mini" data-ids="Wn Wt Wr phi">
+<h4>Fuerza resultante total W</h4>
+<div class="f">$$W = \frac{W_t}{\cos\varphi} = \sqrt{W_t^2+W_r^2}$$</div>
+<p>Es la que el práctico pide como <strong>«fuerza resultante total»</strong> (por ejemplo 25 067 N). Sale del triángulo $W_t = W\cos\varphi$ o directo por Pitágoras.</p>
+</div>
+
+<div class="mini" data-ids="Wa Wt Wr phi psi">
+<h4>Las cuatro fuerzas, de un vistazo</h4>
+<div class="tabla-wrap">
+<table class="tec compacta">
+<thead><tr><th>Fuerza</th><th>Qué es</th><th>Fórmula</th></tr></thead>
+<tbody>
+<tr><td>$W_t$</td><td>tangencial: la que hace el par</td><td><span>$2T/D_p$</span></td></tr>
+<tr><td>$W_r$</td><td>radial: separa los ejes</td><td><span>$W_t\tan\varphi$</span></td></tr>
+<tr><td>$W_a$</td><td>axial: empuja el árbol por el eje</td><td><span>$W_t\tan\psi$</span></td></tr>
+<tr><td><strong>$W$</strong></td><td><strong>resultante total</strong> (normal al flanco)</td><td><span>$W_t/\cos\varphi$</span></td></tr>
+</tbody>
+</table>
+</div>
+<p class="aviso">$W$ no es $W_a$: la total es la suma vectorial de $W_t$ y $W_r$; la axial solo aparece si el diente está inclinado (helicoidal, cónico, sin fin).</p>
 </div>
 
 </div>
@@ -442,6 +509,10 @@ window.CAPITULOS = window.CAPITULOS || [];
 </div>
 ` +
       "</div></details>";
+    /* data-ids="m H" → data-vars con los símbolos del filtro */
+    return html.replace(/data-ids="([^"]*)"/g, function (todo, ids) {
+      return 'data-vars="' + clavesDe(ids) + '"';
+    });
   }
 
 
@@ -488,7 +559,7 @@ window.CAPITULOS = window.CAPITULOS || [];
       t: "Pares de ejes paralelos.",
       o: "Coaxial: mA(z1+z2) = mB(z3+z4), con módulos distintos en cada etapa." },
     "Dp": { q: "Diámetro primitivo: el de la circunferencia de paso, donde el diente rueda sin deslizar.",
-      u: "Con Dp salen m (Dp/z), C, la velocidad (v = πDp n/60000) y la fuerza (Wt = 2T/Dp).",
+      u: "Con Dp salen m (Dp/z), C, la velocidad (V = πDp n/60000) y la fuerza (Wt = 2T/Dp).",
       t: "Todos.",
       o: "En paso diametral va en pulgadas y en par y diámetro en metros: fijate la tarjeta." },
     "Dp1": { q: "Diámetro primitivo del piñón.",
@@ -551,12 +622,20 @@ window.CAPITULOS = window.CAPITULOS || [];
       u: "hc = pc/50 ≈ 0,02pc. Evita que se trabe por dilatación o error de tallado.",
       t: "Todos.",
       o: "No es el juego entre flancos: ese depende del espesor del diente." },
+    "t": { q: "Espesor del diente: el arco de diente medido sobre la circunferencia primitiva.",
+      u: "Con t y v se controla el juego lateral: t + v = pc. Sale de t = (pc − hc)/2.",
+      t: "Dentado recto de altura completa (φ = 20°).",
+      o: "No es un triángulo: t + v = pc es una suma." },
+    "HB": { q: "Dureza Brinell del material: el dato del que sale la tensión admisible St.",
+      u: "St = 0,749·HB + 110 (4140 grado 2) y después fseg = St/σ.",
+      t: "Aceros de la tabla AGMA.",
+      o: "Cada material y grado tiene sus coeficientes: no mezcles el 0,749 con el 0,533." },
     "i": { q: "Relación de transmisión: cuántas vueltas da la entrada por cada vuelta de la salida.",
       u: "i = ne/ns = z2/z1 = Dp2/Dp1 = Ts/Te. Si i > 1 reduce; si i < 1 multiplica.",
       t: "Pares, trenes y reductores.",
       o: "El sentido de giro no está en i: se cuenta aparte con los pares exteriores." },
     "n": { q: "Velocidad de giro en rpm.",
-      u: "n = ω/0,10472 = 60ω/2π. Entra en v = πDp n/60000 y en la elección del módulo.",
+      u: "n = ω/0,10472 = 60ω/2π. Entra en V = πDp n/60000 y en la elección del módulo.",
       t: "Todos.",
       o: "No la confundas con ω (rad/s)." },
     "n1": { q: "Velocidad del eje 1 (normalmente el motor) en rpm.",
@@ -587,26 +666,30 @@ window.CAPITULOS = window.CAPITULOS || [];
       u: "ω = 2πn/60. Con H y T: H = T·ω.",
       t: "Todos.",
       o: "1 rpm = 0,10472 rad/s." },
-    "v": { q: "Velocidad tangencial sobre la circunferencia primitiva.",
-      u: "v = ω·r = πDp·n/60000. Con ella salen Wt = H/v y el factor Kv.",
+    "V": { q: "Velocidad tangencial sobre la circunferencia primitiva. Va con V mayúscula para no confundirla con el vacío del diente.",
+      u: "V = ω·r = πDp·n/60000. Con ella salen Wt = H/V y el factor Kv.",
       t: "Todos.",
-      o: "Para que dé en m/s, el radio va en metros." },
+      o: "Para que dé en m/s, el radio va en metros. La v minúscula es el vacío del diente, en mm." },
+    "v": { q: "Vacío del diente: el ancho del espacio entre dos dientes, medido sobre la circunferencia primitiva. Va con v minúscula.",
+      u: "v = pc − t y se cumple t + v = pc. No es la velocidad.",
+      t: "Dentado recto de altura completa.",
+      o: "No la confundas con V (mayúscula) = velocidad tangencial, en m/s." },
     "r": { q: "Radio primitivo: la mitad del diámetro primitivo (Dp/2).",
-      u: "v = ω·r y T = Wt·r.",
+      u: "V = ω·r y T = Wt·r.",
       t: "Todos.",
       o: "En esas dos fórmulas va en metros (si tenés Dp en mm, r = Dp/2000)." },
     "H": { q: "Potencia en watt.",
-      u: "H = T·ω = Wt·v. De acá salen el par y la fuerza.",
+      u: "H = T·ω = Wt·V. De acá salen el par y la fuerza.",
       t: "Todos.",
       o: "1 HP = 745 W." },
     "HP": { q: "Potencia en caballos de vapor (horse power).",
       u: "W = 745·HP.",
       t: "Motores y enunciados.",
       o: "No es lo mismo que CV (735,5 W)." },
-    "W": { q: "Dos significados: potencia en watt (en la tarjeta HP→watt) o fuerza normal sobre el diente (en el par de engranajes).",
-      u: "Como potencia: W = 745·HP. Como fuerza: W = Wt/cosφ.",
+    "W": { q: "Dos significados: potencia en watt (en la tarjeta HP→watt) o fuerza normal sobre el diente (en el par de engranajes). En el práctico es la «fuerza resultante total».",
+      u: "Como potencia: W = 745·HP. Como fuerza: W = Wt/cosφ = √(Wt²+Wr²).",
       t: "Todos / dentado de evolvente.",
-      o: "Mirá la tarjeta para saber cuál de los dos es." },
+      o: "No la confundas con Wa (axial, solo en helicoidal, cónico y sin fin)." },
     "T": { q: "Par o torque, en N·m.",
       u: "T = H/ω = Wt·r.",
       t: "Todos.",
@@ -628,7 +711,7 @@ window.CAPITULOS = window.CAPITULOS || [];
       t: "Reductores.",
       o: "" },
     "Wt": { q: "Fuerza tangencial: la que transmite el par, aplicada en el primitivo.",
-      u: "Wt = 2T/Dp = H/v. Es la base de Lewis y de las fuerzas radial y axial.",
+      u: "Wt = 2T/Dp = H/V. Es la base de Lewis y de las fuerzas radial y axial.",
       t: "Todos.",
       o: "No es la fuerza total sobre el diente: esa es W." },
     "Wr": { q: "Fuerza radial: empuja los ejes uno hacia el otro.",
@@ -698,15 +781,17 @@ window.CAPITULOS = window.CAPITULOS || [];
 
   var CHIPS_ORDEN = ["m", "mt", "mn", "z", "z1", "z2", "zcCond", "zcCor", "zm", "zs", "zsum",
     "Dp", "Dp1", "Dp2", "Db", "de", "di", "C", "ht", "ad", "ba",
-    "pc", "pb", "px", "Pd", "F", "hc", "i", "n", "n1", "n2", "ne", "ns", "nsolar", "nps",
+    "pc", "pb", "px", "Pd", "F", "hc", "t", "vac", "i", "n", "n1", "n2", "ne", "ns", "nsolar", "nps",
     "w", "v", "r", "H", "HP", "Wpot", "T", "Te", "Ts", "Ps", "Pe", "Wt", "Wr", "Wa",
-    "Kv", "sig", "St", "fseg", "Y", "Lab", "mc", "L", "Ao", "phi", "psi", "gam", "eta"];
+    "Kv", "sig", "St", "HB", "fseg", "Y", "Lab", "mc", "L", "Ao", "phi", "psi", "gam", "eta"];
 
-  function barraFiltro() {
+  function barraFiltro(nF) {
     var usadas = {}, vistos = {}, chips = "";
     Object.keys(INFO).forEach(function (t) {
       (INFO[t].v || []).forEach(function (id) { usadas[id] = 1; });
     });
+    /* variables que solo aparecen en el bloque de las que no son triángulo */
+    ["t", "vac", "HB"].forEach(function (id) { usadas[id] = 1; });
     CHIPS_ORDEN.forEach(function (id) {
       var v = VARS[id];
       if (!v || !usadas[id]) return;
@@ -717,14 +802,15 @@ window.CAPITULOS = window.CAPITULOS || [];
     });
     return '<div class="tri-filtro no-print" id="tri-filtro">' +
       '<div class="tri-filtro-cab"><strong>Filtrar por variable</strong>' +
-      '<span id="tri-res">· ' + (GEOMETRIA.length + MECANICA.length + FUERZAS.length + TRENES.length + HELICOIDALES.length + SUMAS.length) + ' triángulos</span>' +
+      '<span id="tri-res">· ' + (GEOMETRIA.length + MECANICA.length + FUERZAS.length + TRENES.length + HELICOIDALES.length + SUMAS.length) + " triángulos" +
+      (nF ? " + " + nF + " fórmulas" : "") + "</span>" +
       '<button type="button" class="tri-limpiar" id="tri-limpiar" hidden>Ver todos</button></div>' +
       '<div class="tri-cats">' + construirCats().map(function (c, i) {
         return '<button type="button" class="tri-cat" data-cat="' + i + '">' + c.t + "</button>";
       }).join("") + "</div>" +
       '<div class="tri-que" id="tri-que" hidden></div>' +
       '<div class="tri-chips">' + chips + "</div>" +
-      '<p class="tri-filtro-pie">Tocá una <b>categoría</b> para ver solo esos triángulos, o una <b>variable</b> (por ejemplo <b>m</b>) para acotar todavía más.</p>' +
+      '<p class="tri-filtro-pie">Tocá una <b>categoría</b> para ver solo esos triángulos, o una <b>variable</b> (por ejemplo <b>m</b>): además de los triángulos, abajo aparecen las fórmulas que la usan.</p>' +
       "</div>";
   }
 
@@ -786,16 +872,16 @@ window.CAPITULOS = window.CAPITULOS || [];
     ["rpm → rad/s", T`\omega`, T`0{,}10472`, T`n`,
       [T`\omega = 0{,}10472\,n`, T`n = \dfrac{\omega}{0{,}10472}`], T`$0{,}10472 = 2\pi/60$.`],
 
-    ["Velocidad tangencial", T`v`, T`\omega`, T`r`,
-      [T`v = \omega\,r`, T`\omega = \dfrac{v}{r}`, T`r = \dfrac{v}{\omega}`],
-      T`Acá $r$ va en <strong>metros</strong> para que $v$ dé en m/s. Equivale a $v = \pi D_p n/60\,000$ (con $D_p$ en mm).`],
+    ["Velocidad tangencial", T`V`, T`\omega`, T`r`,
+      [T`V = \omega\,r`, T`\omega = \dfrac{V}{r}`, T`r = \dfrac{V}{\omega}`],
+      T`Acá $r$ va en <strong>metros</strong> para que $V$ dé en m/s. Equivale a $V = \pi D_p n/60\,000$ (con $D_p$ en mm).`],
 
     ["Potencia y par", T`H`, T`T`, T`\omega`,
       [T`H = T\,\omega`, T`T = \dfrac{H}{\omega}`, T`\omega = \dfrac{H}{T}`],
       T`La que más se usa en los prácticos.`],
 
-    ["Potencia y fuerza", T`H`, T`W_t`, T`v`,
-      [T`H = W_t\,v`, T`W_t = \dfrac{H}{v}`, T`v = \dfrac{H}{W_t}`]],
+    ["Potencia y fuerza", T`H`, T`W_t`, T`V`,
+      [T`H = W_t\,V`, T`W_t = \dfrac{H}{V}`, T`V = \dfrac{H}{W_t}`]],
 
     ["Par y fuerza", T`T`, T`W_t`, T`r`,
       [T`T = W_t\,r`, T`W_t = \dfrac{T}{r}`, T`r = \dfrac{T}{W_t}`],
@@ -818,9 +904,9 @@ window.CAPITULOS = window.CAPITULOS || [];
       [T`W_r = W_t\tan\varphi`, T`W_t = \dfrac{W_r}{\tan\varphi}`, T`\tan\varphi = \dfrac{W_r}{W_t}`],
       T`φ = 20° → tan φ = 0,364.`],
 
-    ["Fuerza normal", T`W_t`, T`W`, T`\cos\varphi`,
+    ["Fuerza normal (W total)", T`W_t`, T`W`, T`\cos\varphi`,
       [T`W_t = W\cos\varphi`, T`W = \dfrac{W_t}{\cos\varphi}`, T`\cos\varphi = \dfrac{W_t}{W}`],
-      T`Siempre $W > W_t$.`],
+      T`Es la <strong>resultante total</strong> que pide el práctico: $W = \sqrt{W_t^2+W_r^2}$. No la confundas con $W_a$ (axial, solo helicoidal, cónico y sin fin).`],
 
     ["Factor de seguridad", T`S_t`, T`f_{seg}`, T`\sigma`,
       [T`S_t = f_{seg}\,\sigma`, T`f_{seg} = \dfrac{S_t}{\sigma}`, T`\sigma = \dfrac{S_t}{f_{seg}}`],
@@ -878,7 +964,8 @@ window.CAPITULOS = window.CAPITULOS || [];
       T`Con ψ = 20°: cos ψ = 0,9397.`],
 
     ["Helicoidal: fuerza axial", T`W_a`, T`W_t`, T`\tan\psi`,
-      [T`W_a = W_t\tan\psi`, T`W_t = \dfrac{W_a}{\tan\psi}`, T`\tan\psi = \dfrac{W_a}{W_t}`]],
+      [T`W_a = W_t\tan\psi`, T`W_t = \dfrac{W_a}{\tan\psi}`, T`\tan\psi = \dfrac{W_a}{W_t}`],
+      T`Solo aparece si el diente está inclinado (helicoidal, cónico, sin fin). No es la resultante total $W$.`],
 
     ["Cónico: ángulo primitivo", T`z_1`, T`\tan\gamma`, T`z_2`,
       [T`z_1 = z_2\tan\gamma`, T`\tan\gamma = \dfrac{z_1}{z_2}`, T`z_2 = \dfrac{z_1}{\tan\gamma}`],
@@ -951,15 +1038,15 @@ window.CAPITULOS = window.CAPITULOS || [];
       T`Los <strong>90 rad/s</strong> del enunciado.`),
 
     "Velocidad tangencial": ej(T`n = 300 rpm y $D_p = 100$ mm (r = 0,05 m).`,
-      T`\omega = 31{,}42\ \text{rad/s} \quad v = \omega\,r = 31{,}42\cdot 0{,}05 = 1{,}57\ \text{m/s}`,
+      T`\omega = 31{,}42\ \text{rad/s} \quad V = \omega\,r = 31{,}42\cdot 0{,}05 = 1{,}57\ \text{m/s}`,
       T`Ojo: el radio va en <strong>metros</strong> para que dé m/s.`),
 
     "Potencia y par": ej(T`H = <strong>10 HP = 7450 W</strong> y $\omega = 90$ rad/s.`,
       T`T = \frac{H}{\omega} = \frac{7450}{90} = 82{,}8\ \text{N}\cdot\text{m}`,
       T`Los <strong>82,86 N·m</strong> del práctico 1.`),
 
-    "Potencia y fuerza": ej(T`H = <strong>3725 W</strong> (5 HP) y v = 1,131 m/s.`,
-      T`W_t = \frac{H}{v} = \frac{3725}{1{,}131} = 3293\ \text{N}`,
+    "Potencia y fuerza": ej(T`H = <strong>3725 W</strong> (5 HP) y V = 1,131 m/s.`,
+      T`W_t = \frac{H}{V} = \frac{3725}{1{,}131} = 3293\ \text{N}`,
       T`Los <strong>3293 N</strong> del práctico de reductores (P11).`),
 
     "Par y fuerza": ej(T`T = 82,86 N·m y r = 50 mm = <strong>0,05 m</strong>.`,
@@ -982,9 +1069,9 @@ window.CAPITULOS = window.CAPITULOS || [];
       T`W_r = W_t\tan\varphi = 3293\cdot 0{,}364 = 1198{,}7\ \text{N}`,
       T`Es ≈ <strong>0,36·W_t</strong>: sirve para chequear rápido.`),
 
-    "Fuerza normal": ej(T`$W_t = 3293$ N y φ = 20°.`,
+    "Fuerza normal (W total)": ej(T`$W_t = 3293$ N y φ = 20°.`,
       T`W = \frac{W_t}{\cos\varphi} = \frac{3293}{0{,}9397} = 3504\ \text{N}`,
-      T`Siempre <strong>$W > W_t$</strong>.`),
+      T`Siempre <strong>$W > W_t$</strong>. Y también $W = \sqrt{3293^2+1198{,}7^2} = 3504$ N.`),
 
     "Factor de seguridad": ej(T`Material con <strong>$S_t = 375$ MPa</strong> y tensión de Lewis $\sigma = 250$ MPa.`,
       T`f_{seg} = \frac{S_t}{\sigma} = \frac{375}{250} = 1{,}5`,
@@ -1051,10 +1138,13 @@ window.CAPITULOS = window.CAPITULOS || [];
       T`El ancho de cara máximo: $F \le A_o/3 = $ <strong>14 mm</strong>.`)
   };
 
+  var bloqueNoTri = seccionNoTri();
+  var nFormulas = (bloqueNoTri.match(/class="mini"/g) || []).length;
+
   var html = String.raw`
 <h1>Triángulos de despeje</h1>
 <p class="bajada">Todos los triángulos de la materia en un solo lugar. Tapás la incógnita y leés el despeje sin pensar: es la forma más rápida de no equivocarse con una fracción en el examen. Al final están las fórmulas que <strong>no</strong> entran en un triángulo y cómo adaptarlas.</p>
-` + barraFiltro() + String.raw`
+` + barraFiltro(nFormulas) + String.raw`
 <details class="tri-aux" id="tri-reglas">
 <summary>Reglas, cómo se lee y lo que no entra<span class="no-print"> — tocá para abrir</span></summary>
 <div class="details-cuerpo">
@@ -1076,7 +1166,8 @@ window.CAPITULOS = window.CAPITULOS || [];
 <li>Debajo de cada tarjeta está el <strong>significado y la unidad</strong> de cada variable: <strong>[mm]</strong> milímetros, <strong>[rad/s]</strong>, <strong>[rpm]</strong>, <strong>[N·m]</strong>, <strong>[N]</strong>, <strong>[MPa]</strong>, <strong>[W]</strong>, <strong>[°]</strong>, <strong>[1/pulg]</strong>.</li>
 <li><strong>[—]</strong> quiere decir que no tiene unidad: números de dientes, relaciones, factores y rendimientos.</li>
 <li>El símbolo <strong class="prod">∏</strong> es la <strong>productoria</strong> (Pi mayúscula): significa «multiplicá todos los términos». No confundir con <strong>π</strong> (pi minúscula), que es 3,1416.</li>
-<li>Ojo con las mezclas: en $v = \omega\,r$ y en $T = W_t\,r$ el radio va en <strong>metros</strong> (si tenés el diámetro, $r = D_p/2000$), porque $v$ sale en m/s y $T$ en N·m. Los diámetros, en cambio, van en mm.</li>
+<li>Ojo con las mezclas: en $V = \omega\,r$ y en $T = W_t\,r$ el radio va en <strong>metros</strong> (si tenés el diámetro, $r = D_p/2000$), porque $V$ sale en m/s y $T$ en N·m. Los diámetros, en cambio, van en mm.</li>
+<li><strong>Dos letras que se parecen:</strong> <strong>V</strong> (mayúscula) es la <strong>velocidad tangencial</strong> [m/s]; <strong>v</strong> (minúscula) es el <strong>vacío del diente</strong> [mm]. Con V salen $W_t$ y $K_v$; con v se controla el juego lateral.</li>
 </ul>
 </div>
 
@@ -1121,7 +1212,7 @@ window.CAPITULOS = window.CAPITULOS || [];
     seccion("Trenes, reductores y planetarios", TRENES, 3) +
     seccion("Helicoidales y cónicos", HELICOIDALES, 4) +
     seccionSumas() +
-    seccionNoTri() +
+    bloqueNoTri +
     String.raw`
 <details class="tri-aux tri-aux-mini">
 <summary>Chuleta de constantes para el triángulo<span class="no-print"> — tocá para abrir</span></summary>
@@ -1285,19 +1376,68 @@ window.CAPITULOS = window.CAPITULOS || [];
     Array.prototype.forEach.call(root.querySelectorAll(".tri-sec"), function (sec) {
       sec.hidden = (!!sym || !!set) && !sec.querySelector(".tri-card:not([hidden])");
     });
+    var chipSel = sym ? barra.querySelector('.tri-chip[data-sym="' + sym + '"]') : null;
+    var notri = root.querySelector("#tri-notri");
+    var nVis = 0;
+
     Array.prototype.forEach.call(root.querySelectorAll(".tri-aux"), function (aux) {
+      if (aux === notri) return;
       aux.hidden = !!sym || !!set;
     });
 
-    var chipSel = sym ? barra.querySelector('.tri-chip[data-sym="' + sym + '"]') : null;
+    if (notri) {
+      var minis = notri.querySelectorAll(".mini");
+      Array.prototype.forEach.call(minis, function (mi) {
+        var keys = (mi.getAttribute("data-vars") || "").split(" ");
+        var ok = !sym || keys.indexOf(sym) > -1;
+        mi.hidden = !!sym && !ok;
+        if (ok && sym) nVis++;
+      });
+      /* grupos: si no queda ninguna tarjeta visible, se esconde el título */
+      var cuerpo = notri.querySelector(".details-cuerpo");
+      var nodos = cuerpo ? Array.prototype.slice.call(cuerpo.children) : [];
+      var grupoH = null, grupoVis = 0;
+      var cerrarGrupo = function () { if (grupoH) grupoH.hidden = !!sym && grupoVis === 0; };
+      nodos.forEach(function (n) {
+        if (n.tagName === "H3") { cerrarGrupo(); grupoH = n; grupoVis = 0; return; }
+        if (n.classList.contains("mini")) { if (!n.hidden) grupoVis++; return; }
+        if (n.classList.contains("grid2")) {
+          var vv = 0;
+          Array.prototype.forEach.call(n.querySelectorAll(".mini"), function (m2) { if (!m2.hidden) vv++; });
+          grupoVis += vv;
+          n.hidden = !!sym && vv === 0;
+          return;
+        }
+        if (n.classList.contains("caja")) n.hidden = !!sym;
+      });
+      cerrarGrupo();
+
+      var tit = notri.querySelector(".notri-tit");
+      if (set || (sym && !nVis)) {
+        notri.hidden = true;
+        notri.open = false;
+        notri.removeAttribute("data-auto");
+        if (tit) tit.textContent = "Las que no son triángulo, con el despeje hecho";
+      } else {
+        notri.hidden = false;
+        if (sym) {
+          if (!notri.open) { notri.open = true; notri.setAttribute("data-auto", "1"); }
+          if (tit) tit.textContent = "Las que no son triángulo con " + (chipSel ? chipSel.textContent : sym) + " (" + nVis + ")";
+        } else {
+          if (notri.getAttribute("data-auto") === "1") { notri.open = false; notri.removeAttribute("data-auto"); }
+          if (tit) tit.textContent = "Las que no son triángulo, con el despeje hecho";
+        }
+      }
+    }
 
     if (res) {
       if (chipSel) {
-        res.innerHTML = "· " + vis + (vis === 1 ? " triángulo con " : " triángulos con ") + chipSel.innerHTML;
+        res.innerHTML = "· " + vis + (vis === 1 ? " triángulo" : " triángulos") +
+          (nVis ? " + " + nVis + (nVis === 1 ? " fórmula" : " fórmulas") : "") + " con " + chipSel.innerHTML;
       } else if (set) {
         res.innerHTML = "· " + vis + (vis === 1 ? " triángulo" : " triángulos");
       } else {
-        res.textContent = "· " + cards.length + " triángulos";
+        res.textContent = "· " + cards.length + " triángulos" + (nFormulas ? " + " + nFormulas + " fórmulas" : "");
       }
     }
     if (que) {
