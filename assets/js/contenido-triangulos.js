@@ -149,6 +149,40 @@ window.CAPITULOS = window.CAPITULOS || [];
       "</div>";
   }
 
+  /* las etiquetas del triángulo son grandes: si alguna no entra, se achica lo justo
+     (siempre el mismo tamaño para las tres de ese triángulo, para que no quede desparejo) */
+  function ajustarLetras(raiz) {
+    var scope = raiz && raiz.querySelectorAll ? raiz : document;
+    Array.prototype.forEach.call(scope.querySelectorAll(".tri"), function (t) {
+      var spans = [].slice.call(t.querySelectorAll(":scope > span"));
+      if (!spans.length) return;
+      Array.prototype.forEach.call(spans, function (s) { s.style.fontSize = ""; });
+      var caja = t.getBoundingClientRect();
+      if (!caja.width || !caja.height) return;
+      var base = parseFloat(window.getComputedStyle(spans[0]).fontSize);
+      if (!base) return;
+      var px = base;
+      for (var paso = 0; paso < 4; paso++) {
+        var factor = 1;
+        spans.forEach(function (s) {
+          var r = s.getBoundingClientRect();
+          if (!r.width) return;
+          var alto = (r.top - caja.top) / caja.height;
+          var media = 0.475 * ((alto * 168 - 7) / 154);
+          var cx = caja.left + caja.width / 2;
+          var izq = cx - media * caja.width, der = cx + media * caja.width;
+          if (Math.max(izq - r.left, r.right - der, 0) <= 0.5) return;
+          var centro = (r.left + r.right) / 2;
+          var disp = 2 * Math.min(centro - izq, der - centro) - 2;
+          factor = Math.min(factor, disp > 6 ? disp / r.width : 0.55);
+        });
+        if (factor >= 0.995) break;
+        px = Math.max(9, px * factor * 0.985);
+        Array.prototype.forEach.call(spans, function (s) { s.style.fontSize = px.toFixed(1) + "px"; });
+      }
+    });
+  }
+
   function leyenda(titulo) {
     var info = INFO[titulo];
     if (!info || !info.v || !info.v.length) return "";
@@ -949,7 +983,7 @@ window.CAPITULOS = window.CAPITULOS || [];
     ["Sin fin: paso axial", T`p_x`, T`\pi`, T`m_n`,
       [T`p_x = \pi\,m_n`, T`m_n = \dfrac{p_x}{\pi}`]],
 
-    ["Planetario: brazo", T`n_{ps}`, T`n_{solar}`, T`\dfrac{z_s}{z_s+z_c}`,
+    ["Planetario: brazo", T`n_{ps}`, T`n_{solar}`, T`\tfrac{z_s}{z_s+z_c}`,
       [T`n_{ps} = n_{solar}\,\dfrac{z_s}{z_s + z_c}`, T`n_{solar} = n_{ps}\,\dfrac{z_s + z_c}{z_s}`],
       T`Vale con la corona fija.`],
 
@@ -1138,13 +1172,135 @@ window.CAPITULOS = window.CAPITULOS || [];
       T`El ancho de cara máximo: $F \le A_o/3 = $ <strong>14 mm</strong>.`)
   };
 
+  /* ---------- versión condensada: un triángulo por familia + otras formas de la MISMA incógnita ---------- */
+  var CONDENSADAS = [
+    ["Módulo", T`D_p`, T`m`, T`z`,
+      [T`m = p_c/\pi`, T`m = \dfrac{25{,}4}{P_d}`, T`m = F/9{,}5`], "Dp m z pc Pd"],
+    ["Relación", T`n_1`, T`i`, T`n_2`,
+      [T`i = \dfrac{z_2}{z_1} = \dfrac{D_{p2}}{D_{p1}}`, T`i = \dfrac{T_s}{T_e}`], "n1 i n2 z1 z2 Dp1 Dp2"],
+    ["Centros", T`2C`, T`m`, T`z_1+z_2`,
+      [T`C = r_1+r_2`, T`C = \dfrac{D_{p1}+D_{p2}}{2}`, T`C = \dfrac{m_n(z_1+z_2)}{2\cos\psi}`], "C m zsum"],
+    ["Ancho de cara", T`F`, T`9{,}5`, T`m`,
+      [T`7m \le F \le 12m`], "F m"],
+    ["Potencia", T`H`, T`T`, T`\omega`,
+      [T`H = W_t\,V`, T`1\,HP = 745\,W`], "H T w HP"],
+    ["Par", T`2T`, T`W_t`, T`D_p`,
+      [T`T = W_t\,r`, T`T = \dfrac{H}{\omega}`], "T Wt Dp"],
+    ["Velocidad", T`V`, T`\omega`, T`r`,
+      [T`V = \omega\,r`, T`V = \dfrac{\pi D_p n}{60\,000}`], "V w r Dp"],
+    ["Fuerza radial", T`W_r`, T`W_t`, T`\tan\varphi`,
+      [T`W_r = W\operatorname{sen}\varphi`, T`W_r \approx 0{,}36\,W_t`], "Wr Wt phi"],
+    ["Fuerza total", T`W_t`, T`W`, T`\cos\varphi`,
+      [T`W = \sqrt{W_t^2+W_r^2}`, T`W = \dfrac{W_r}{\operatorname{sen}\varphi}`], "Wn Wt Wr phi",
+      "W es la resultante en el plano del engrane; W<sub>a</sub> es la axial."],
+    ["Tensión de Lewis", T`K_vW_t`, T`\sigma`, T`F\,m\,Y`,
+      [T`\sigma = \dfrac{K_v W_t}{F\,m\,Y}`, T`F = \dfrac{K_v W_t}{\sigma\,m\,Y}`], "Kv Wt sig F m Y"],
+    ["Factor de seguridad", T`S_t`, T`f_{seg}`, T`\sigma`,
+      [T`S_t = 0{,}749\,H_B+110`, T`f_{seg} \ge 1{,}2`], "St fseg sig HB"],
+    ["Tren", T`\displaystyle\prod z_c`, T`i`, T`\displaystyle\prod z_m`,
+      [T`i = \dfrac{n_e}{n_s}`, T`i = i_1\,i_2\cdots`], "zcCond zm i ne ns"],
+    ["Sin fin", T`z_2`, T`i`, T`z_1`,
+      [T`L = p_x\,z_1`, T`p_x = \pi\,m_n`], "z2 i z1 px L"],
+    ["Helicoidal", T`m_n`, T`m_t`, T`\cos\psi`,
+      [T`W_a = W_t\tan\psi`, T`C = \dfrac{m_n(z_1+z_2)}{2\cos\psi}`], "mn mt psi Wa C"],
+    ["Cónico", T`z_1`, T`\tan\gamma`, T`z_2`,
+      [T`\Gamma = 90°-\gamma`, T`A_o = \dfrac{D_p}{2\operatorname{sen}\gamma}`, T`F \le A_o/3`], "z1 gam z2 Ao F"],
+    ["Planetario", T`n_{ps}`, T`n_{solar}`, T`\tfrac{z_s}{z_s+z_c}`,
+      [T`n_{ps} = \dfrac{n_{solar}}{1-i_0}`, T`n_{ps} = \dfrac{n_e}{1-i_0}`], "nps nsol zs zcCor",
+      "Corona fija: vale el triángulo. Solar fija: la segunda, con i<sub>0</sub> del brazo fijo."]
+  ];
+
+  /* ejemplo que mejor ilustra cada familia condensada */
+  var EJ_COND = {
+    "Módulo": "Módulo",
+    "Relación": "Relación por dientes",
+    "Centros": "Distancia entre centros",
+    "Ancho de cara": "Ancho de cara (Fanchon)",
+    "Potencia": "Potencia y par",
+    "Par": "Par y fuerza",
+    "Velocidad": "Velocidad tangencial",
+    "Fuerza radial": "Fuerza radial",
+    "Fuerza total": "Fuerza normal (W total)",
+    "Tensión de Lewis": "Lewis: tensión",
+    "Factor de seguridad": "Factor de seguridad",
+    "Tren": "Tren: velocidades",
+    "Sin fin": "Sin fin: relación",
+    "Helicoidal": "Helicoidal: módulo normal",
+    "Cónico": "Cónico: ángulo primitivo",
+    "Planetario": "Planetario: brazo"
+  };
+
+  function tarjetaCond(c) {
+    var eq = (c[4] || []).map(function (q) {
+      return "<li><span>$" + q + "$</span></li>";
+    }).join("");
+    var ej = EJ_COND[c[0]] && EJEMPLOS[EJ_COND[c[0]]]
+      ? '<button type="button" class="tri-ej" data-ej="' + EJ_COND[c[0]] + '">Ver ejemplo →</button>'
+      : "";
+    return '<div class="tri-card cond" data-vars="' + clavesDe(c[5]) + '">' +
+      "<h4>" + c[0] + "</h4>" +
+      '<div class="cond-cuerpo">' +
+      tri(c[1], c[2], c[3]) +
+      '<div class="cond-eq-box">' +
+      '<p class="cond-cap">otras formas</p>' +
+      '<ul class="cond-eq">' + eq + "</ul>" +
+      "</div>" +
+      (c[6] ? '<p class="tri-nota">' + c[6] + "</p>" : "") +
+      ej +
+      "</div></div>";
+  }
+
+  function seccionCond() {
+    return '<section class="tri-sec tri-cond">' +
+      "<h2>Versión condensada</h2>" +
+      '<p class="bajada">Un triángulo por familia y las otras formas de calcular <strong>esa misma incógnita</strong>. Es la versión para tener todo en dos hojas.</p>' +
+      '<div class="tris">' +
+      CONDENSADAS.map(tarjetaCond).join("") +
+      String.raw`<div class="tri-card cond" data-vars="` + clavesDe("de di ht pc hc t vac m") + String.raw`">
+<h4>Medidas del diente</h4>
+<p class="cond-cap">sumas y restas</p>
+<div class="tri-des">
+<span>$d_e = D_p+2m$</span><span>$d_i = D_p-2{,}5m$</span><span>$h_t = 2{,}25m$</span>
+<span>$p_c = \pi m$</span><span>$h_c = p_c/50$</span><span>$t = \dfrac{p_c-h_c}{2}$</span><span>$v = p_c-t$</span>
+</div>
+<p class="tri-nota">No tienen triángulo: se despejan a mano.</p>
+</div>` +
+      "</div></section>";
+  }
+
+  /* ---------- barra de versión + opciones de impresión ---------- */
+  function barraModo() {
+    return '<div class="tri-modo no-print" id="tri-modo">' +
+      '<div class="g"><span class="g-tit">Versión:</span>' +
+      '<button type="button" class="tri-ver activo" data-ver="completa">Completa · 42</button>' +
+      '<button type="button" class="tri-ver" data-ver="cond">Condensada · 17</button></div>' +
+      '<div class="g tri-print-opts"><span class="g-tit">Al imprimir:</span>' +
+      '<label><input type="checkbox" data-ptri="titulo" checked> Título</label>' +
+      '<label><input type="checkbox" data-ptri="reglas"> Reglas</label>' +
+      '<label><input type="checkbox" data-ptri="sumas"> Sumas</label>' +
+      '<label><input type="checkbox" data-ptri="notri"> No triángulo</label>' +
+      '<label><input type="checkbox" data-ptri="chuleta"> Chuleta</label>' +
+      '<label><input type="checkbox" data-ptri="check"> Checklist</label>' +
+      '<button type="button" id="tri-imprimir" title="Imprimir solo lo tildado">Imprimir</button></div>' +
+      "</div>";
+  }
+
+  function aplicarPrint(root) {
+    if (!root || !root.querySelectorAll) root = document;
+    var off = [];
+    Array.prototype.forEach.call(root.querySelectorAll("[data-ptri]"), function (c) {
+      if (!c.checked) off.push(c.getAttribute("data-ptri"));
+    });
+    document.documentElement.setAttribute("data-tri-off", off.join(" "));
+  }
+
   var bloqueNoTri = seccionNoTri();
   var nFormulas = (bloqueNoTri.match(/class="mini"/g) || []).length;
 
   var html = String.raw`
 <h1>Triángulos de despeje</h1>
 <p class="bajada">Todos los triángulos de la materia en un solo lugar. Tapás la incógnita y leés el despeje sin pensar: es la forma más rápida de no equivocarse con una fracción en el examen. Al final están las fórmulas que <strong>no</strong> entran en un triángulo y cómo adaptarlas.</p>
-` + barraFiltro(nFormulas) + String.raw`
+` + barraFiltro(nFormulas) + barraModo() + seccionCond() + String.raw`
 <details class="tri-aux" id="tri-reglas">
 <summary>Reglas, cómo se lee y lo que no entra<span class="no-print"> — tocá para abrir</span></summary>
 <div class="details-cuerpo">
@@ -1214,7 +1370,7 @@ window.CAPITULOS = window.CAPITULOS || [];
     seccionSumas() +
     bloqueNoTri +
     String.raw`
-<details class="tri-aux tri-aux-mini">
+<details class="tri-aux tri-aux-mini" id="tri-chuleta">
 <summary>Chuleta de constantes para el triángulo<span class="no-print"> — tocá para abrir</span></summary>
 <div class="details-cuerpo">
 <div class="caja dato">
@@ -1235,7 +1391,7 @@ window.CAPITULOS = window.CAPITULOS || [];
 </div>
 </details>
 
-<details class="tri-aux tri-aux-mini">
+<details class="tri-aux tri-aux-mini" id="tri-check">
 <summary>Checklist para el examen<span class="no-print"> — tocá para abrir</span></summary>
 <div class="details-cuerpo">
 <div class="caja">
@@ -1348,7 +1504,10 @@ window.CAPITULOS = window.CAPITULOS || [];
     var limpiar = barra.querySelector("#tri-limpiar");
     var que = barra.querySelector("#tri-que");
     var chips = barra.querySelectorAll(".tri-chip");
-    var cards = root.querySelectorAll(".tri-sec .tri-card");
+    var cond = root.classList.contains("ver-cond");
+    /* la condensada no tiene atajos por categoría: si venía uno elegido, no lo aplicamos */
+    if (cond && set) { idx = -1; set = null; }
+    var cards = root.querySelectorAll(cond ? ".tri-sec.tri-cond .tri-card" : ".tri-sec:not(.tri-cond) .tri-card");
     var sugeridas = 0;
 
     Array.prototype.forEach.call(chips, function (c) {
@@ -1359,7 +1518,7 @@ window.CAPITULOS = window.CAPITULOS || [];
       c.classList.toggle("sug", sug);
     });
     barra.classList.toggle("cat-on", !!set);
-    Array.prototype.forEach.call(barra.querySelectorAll(".tri-cat"), function (b, i) {
+    if (!cond) Array.prototype.forEach.call(barra.querySelectorAll(".tri-cat"), function (b, i) {
       b.classList.toggle("activo", i === idx);
     });
 
@@ -1373,7 +1532,7 @@ window.CAPITULOS = window.CAPITULOS || [];
       c.hidden = !ok;
       if (ok) vis++;
     });
-    Array.prototype.forEach.call(root.querySelectorAll(".tri-sec"), function (sec) {
+    Array.prototype.forEach.call(root.querySelectorAll(cond ? ".tri-sec.tri-cond" : ".tri-sec:not(.tri-cond)"), function (sec) {
       sec.hidden = (!!sym || !!set) && !sec.querySelector(".tri-card:not([hidden])");
     });
     var chipSel = sym ? barra.querySelector('.tri-chip[data-sym="' + sym + '"]') : null;
@@ -1431,13 +1590,15 @@ window.CAPITULOS = window.CAPITULOS || [];
     }
 
     if (res) {
+      var sust = cond ? (vis === 1 ? " tarjeta" : " tarjetas") : (vis === 1 ? " triángulo" : " triángulos");
       if (chipSel) {
-        res.innerHTML = "· " + vis + (vis === 1 ? " triángulo" : " triángulos") +
+        res.innerHTML = "· " + vis + sust +
           (nVis ? " + " + nVis + (nVis === 1 ? " fórmula" : " fórmulas") : "") + " con " + chipSel.innerHTML;
       } else if (set) {
-        res.innerHTML = "· " + vis + (vis === 1 ? " triángulo" : " triángulos");
+        res.innerHTML = "· " + vis + sust;
       } else {
-        res.textContent = "· " + cards.length + " triángulos" + (nFormulas ? " + " + nFormulas + " fórmulas" : "");
+        res.textContent = "· " + cards.length + (cond ? " tarjetas" : " triángulos") +
+          (!cond && nFormulas ? " + " + nFormulas + " fórmulas" : "");
       }
     }
     if (que) {
@@ -1461,6 +1622,24 @@ window.CAPITULOS = window.CAPITULOS || [];
 
   document.addEventListener("click", function (e) {
     var t = e.target;
+    var ver = t && t.closest ? t.closest(".tri-ver") : null;
+    if (ver) {
+      var raiz = ver.closest(".contenido") || document;
+      var cond = ver.getAttribute("data-ver") === "cond";
+      raiz.classList.toggle("ver-cond", cond);
+      Array.prototype.forEach.call(raiz.querySelectorAll(".tri-ver"), function (b) {
+        b.classList.toggle("activo", (b.getAttribute("data-ver") === "cond") === cond);
+      });
+      var barraV = raiz.querySelector(".tri-filtro");
+      if (barraV) pintarFiltro(barraV);
+      ajustarLetras(raiz);
+      return;
+    }
+    if (t && t.id === "tri-imprimir") {
+      aplicarPrint(t.closest(".contenido") || document);
+      window.print();
+      return;
+    }
     var chip = t && t.closest ? t.closest(".tri-chip") : null;
     if (chip) {
       var barra = chip.closest(".tri-filtro");
@@ -1506,5 +1685,41 @@ window.CAPITULOS = window.CAPITULOS || [];
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" || e.key === "Esc") cerrarEjemplo();
   });
-  window.addEventListener("hashchange", cerrarEjemplo);
+  document.addEventListener("change", function (e) {
+    var t = e.target;
+    if (t && t.matches && t.matches("[data-ptri]")) aplicarPrint(t.closest(".contenido") || document);
+  });
+
+  /* al entrar a la sección: opciones de impresión por defecto y versión completa */
+  document.documentElement.setAttribute("data-tri-off", "reglas sumas notri chuleta check");
+  window.addEventListener("hashchange", function () {
+    cerrarEjemplo();
+    setTimeout(function () {
+      var cont = document.querySelector(".contenido");
+      if (cont) cont.classList.remove("ver-cond");
+      var modo = document.getElementById("tri-modo");
+      if (modo) aplicarPrint(modo.closest(".contenido"));
+    }, 60);
+  });
+
+  /* el tamaño de las letras del triángulo se recalcula con el ancho real */
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () { ajustarLetras(document); }, 120);
+  });
+  window.addEventListener("load", function () {
+    setTimeout(function () { ajustarLetras(document); }, 60);
+  });
+  var tAjuste = 0;
+  window.addEventListener("resize", function () {
+    clearTimeout(tAjuste);
+    tAjuste = setTimeout(function () { ajustarLetras(document); }, 160);
+  });
+  window.addEventListener("hashchange", function () {
+    setTimeout(function () { ajustarLetras(document); }, 180);
+  });
+  document.addEventListener("toggle", function (e) {
+    if (e.target && e.target.tagName === "DETAILS") {
+      setTimeout(function () { ajustarLetras(e.target); }, 40);
+    }
+  }, true);
 })();

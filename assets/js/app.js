@@ -187,6 +187,7 @@
 
     capActual = cap;
     principal.innerHTML = cinta(cap) + cap.html + paginador(idx);
+    principal.setAttribute("data-cap", cap.id);
     prepararTitulos(principal, cap.id);
     renderMath(principal);
 

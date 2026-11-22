@@ -59,6 +59,14 @@ Si preferís subir la carpeta tal cual, la URL será
 |---|
 | ![Fórmulas que no son triángulo](vista-formulas.png) |
 
+| Versión condensada: un triángulo por familia y las otras fórmulas de esa misma incógnita (2 páginas) |
+|---|
+| ![Versión condensada](vista-condensada.png) |
+
+| Versión condensada en pantalla: el triángulo arriba y las otras formas en un panel debajo |
+|---|
+| ![Versión condensada en pantalla](vista-condensada-pantalla.png) |
+
 | Resumen impreso en A4 (blanco y negro) |
 |---|
 | ![Resumen impreso](vista-impresion.png) |
@@ -119,8 +127,14 @@ Si preferís subir la carpeta tal cual, la URL será
   se iluminan las variables de esa sección **y se filtran los triángulos**, así quedan solo los de esa
   categoría (con el conteo en la cabecera) hasta elegir una variable o tocar **Ver todos**. Todo lo que es
   referencia —las reglas y el «cómo se lee», el porqué de los triángulos de suma, la chuleta de constantes y
-  el checklist— va **plegado**, para que por defecto solo se vean los triángulos. Al imprimir se abre solo
-  y el capítulo sale en blanco y negro (13 páginas).
+  el checklist— va **plegado**, para que por defecto solo se vean los triángulos.
+  Tiene **dos versiones**: **Completa (42 tarjetas)** y **Condensada (17)**: un triángulo por familia y, en
+  un panel debajo, **las otras formas de calcular esa misma incógnita** (por ejemplo, en el del módulo:
+  `m = p_c/π`, `m = 25,4/P_d`, `m = F/9,5`), cada tarjeta con su **Ver ejemplo**; la condensada imprime en
+  **2 páginas** con las fórmulas al lado del triángulo. Las variables dentro del triángulo van **grandes y
+  centradas** para leerlas de un vistazo (se achican solas, solo si hace falta, para no salirse de las líneas).
+  Y **opciones de impresión**: tildás qué querés que salga (título, reglas, sumas, no triángulo, chuleta,
+  checklist) y por defecto **imprime solo los triángulos (5 páginas)**, sin el texto de referencia.
   Además incluye un bloque plegado con **las fórmulas que no son triángulo, ya despejadas** (24 tarjetas:
   K<sub>v</sub> con sus cuatro tallados, V en m/s, módulo por raíz cúbica con H y S<sub>adm</sub> despejados,
   z<sub>mín</sub>, espesor y vacío del diente, diente recortado, las cuatro S<sub>t</sub>, L<sub>ab</sub>, tren

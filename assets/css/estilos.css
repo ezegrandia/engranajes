@@ -23,6 +23,8 @@
   --azul-soft:#eaf0f8;
   --amar:#8a6a00;
   --amar-soft:#fdf5dd;
+  --tri-panel:#f3f6f4;
+  --tri-panel-lin:#e2e9e4;
   --sombra:0 1px 2px rgba(20,25,30,.05),0 6px 18px rgba(20,25,30,.06);
   --radio:12px;
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
@@ -50,6 +52,8 @@ html[data-tema="oscuro"]{
   --azul-soft:#1a2432;
   --amar:#e0bb59;
   --amar-soft:#2b2517;
+  --tri-panel:#1e252d;
+  --tri-panel-lin:#2c3540;
   --sombra:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.28);
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -469,11 +473,11 @@ details>summary:hover{color:var(--ac)}
 .tri svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .tri svg path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round;stroke-opacity:.45}
 .tri>span{
-  position:absolute;transform:translate(-50%,-50%);font-size:.84rem;font-weight:700;
+  position:absolute;transform:translate(-50%,-50%);font-size:1.04rem;font-weight:700;
   white-space:nowrap;color:var(--txt);cursor:pointer;line-height:1;
 }
 .tri>span:hover{color:var(--ac)}
-.tri .katex{font-size:.84rem}
+.tri .katex{font-size:1em}
 .tri-t{left:50%;top:39%}
 .tri-l{left:30.5%;top:76%}
 .tri-r{left:69.5%;top:76%}
@@ -482,7 +486,7 @@ details>summary:hover{color:var(--ac)}
 .tri>span.tap{color:transparent!important}
 .tri>span.tap::after{
   content:"?";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  color:var(--alerta);font-weight:800;font-size:1.05rem;
+  color:var(--alerta);font-weight:800;font-size:1.3rem;
 }
 .tri-des{
   display:flex;flex-direction:column;align-items:center;gap:.12rem;
@@ -571,6 +575,91 @@ details.tri-aux .grid2 .mini{min-width:0}
 .tri-chip:hover{border-color:var(--ac);color:var(--ac)}
 .tri-chip.activo{background:var(--ac);border-color:var(--ac);color:#fff}
 .tri-filtro-pie{margin:.4rem 0 0;font-size:.66rem;color:var(--txt3)}
+/* barra de versión + opciones de impresión */
+.tri-modo{
+  display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;align-items:center;
+  margin:0 0 1.1rem;padding:.5rem .65rem;border:1px solid var(--lin2);
+  border-radius:12px;background:var(--sup2);font-size:.78rem;color:var(--txt2);
+}
+.tri-modo .g{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
+.tri-modo .g-tit{font-size:.64rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);margin-right:.1rem}
+.tri-ver{
+  font-size:.72rem;font-weight:700;padding:.24rem .55rem;border:1px solid var(--lin2);
+  border-radius:99px;background:var(--sup);color:var(--txt2);
+}
+.tri-ver:hover{border-color:var(--ac);color:var(--ac)}
+.tri-ver.activo{background:var(--ac-soft);border-color:var(--ac);color:var(--ac)}
+.tri-print-opts label{display:inline-flex;align-items:center;gap:.22rem;font-size:.74rem;color:var(--txt2);cursor:pointer}
+.tri-print-opts input{accent-color:var(--ac);margin:0}
+#tri-imprimir{
+  margin-left:.15rem;font-size:.72rem;font-weight:800;padding:.24rem .65rem;border-radius:99px;
+  border:1px solid var(--ac);background:var(--ac);color:#fff;
+}
+#tri-imprimir:hover{filter:brightness(1.08)}
+/* versión condensada */
+.tri-cond{display:none}
+.contenido.ver-cond .tri-cond{display:block}
+.contenido.ver-cond .tri-sec:not(.tri-cond){display:none}
+.contenido.ver-cond .tri-cats{display:none}
+.tri-cond{container-type:inline-size}
+.tri-cond .tris{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:.7rem;
+  align-items:start;
+}
+@container (min-width:520px){.tri-cond .tris{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container (min-width:800px){.tri-cond .tris{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@supports not (container-type:inline-size){
+  @media (min-width:760px){.tri-cond .tris{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (min-width:1200px){.tri-cond .tris{grid-template-columns:repeat(3,minmax(0,1fr))}}
+}
+.tri-card.cond{
+  width:100%;max-width:none;min-width:0;
+  margin:0;padding:.55rem .6rem .55rem;
+  break-inside:avoid;
+}
+.tri-card.cond h4{font-size:.82rem;margin:0 0 .1rem}
+.cond-cuerpo{
+  display:flex;flex-direction:column;align-items:center;
+  min-width:0;
+}
+.tri-card.cond .tri{width:182px;max-width:182px;margin:.05rem auto .1rem}
+@media screen{
+  /* en la condensada el triángulo es lo que se mira: variables bien grandes */
+  .tri-card.cond .tri>span{font-size:1.14rem}
+  .tri-card.cond .tri .katex{font-size:1em}
+}
+/* panel de equivalencias */
+.cond-eq-box{
+  width:100%;min-width:0;
+  display:flex;flex-direction:column;
+  margin-top:.2rem;padding:.3rem .45rem .4rem;
+  background:var(--tri-panel);border:1px solid var(--tri-panel-lin);border-radius:10px;
+}
+.cond-cap{
+  display:flex;align-items:center;gap:.45rem;margin:0 0 .1rem;
+  font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);
+  white-space:nowrap;
+}
+.cond-cap::after{content:"";flex:1;height:1px;background:var(--tri-panel-lin)}
+.cond-eq{
+  list-style:none;margin:0;padding:0;width:100%;min-width:0;
+  display:flex;flex-direction:column;gap:.3rem;
+}
+.cond-eq li{
+  font-size:.86rem;line-height:1.3;color:var(--txt);text-align:center;
+  padding:0;border:0;overflow-x:auto;scrollbar-width:none;
+}
+.cond-eq li::-webkit-scrollbar{display:none}
+.cond-eq li .katex{font-size:1em}
+/* la tarjeta de sumas no tiene triángulo: mismo panel, sin triángulo */
+.tri-card.cond .tri-des{
+  border:1px solid var(--tri-panel-lin);border-radius:10px;background:var(--tri-panel);
+  padding:.4rem .5rem;margin-top:.35rem;gap:.22rem;
+}
+.tri-card.cond .tri-des>span{font-size:.86rem}
+.tri-card.cond .tri-des .katex{font-size:.86rem}
 /* secciones que el filtro puede ocultar */
 .tri-sec[hidden],.tri-aux[hidden]{display:none}
 /* triángulos de suma: otro color y signo en la raya */
@@ -583,7 +672,7 @@ details.tri-aux .grid2 .mini{min-width:0}
 .tri-suma svg path{stroke:var(--azul2);stroke-opacity:.8}
 .tri-suma .tri-signo{
   position:absolute;left:50%;top:56.5%;transform:translate(-50%,-50%);
-  font-size:1.2rem;font-weight:800;color:var(--azul2);line-height:1;cursor:default;pointer-events:none;
+  font-size:1.4rem;font-weight:800;color:var(--azul2);line-height:1;cursor:default;pointer-events:none;
 }
 /* botón "Ver ejemplo" y ventana del ejemplo */
 .tri-ej{
@@ -610,7 +699,7 @@ details.tri-aux .grid2 .mini{min-width:0}
 html.sin-scroll,html.sin-scroll body{overflow:hidden}
 /* productoria ∏ (Pi mayúscula), bien distinta de π */
 .prod{font-family:var(--serif);font-size:1.2em;font-weight:700;line-height:1;vertical-align:-.06em}
-@media (max-width:520px){.tris{grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}.tri-card{padding:.45rem .45rem .55rem}.tri{max-width:140px}}
+@media (max-width:520px){.tris{grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}.tri-card{padding:.4rem .35rem .5rem}.tri{max-width:160px}}
 
 /* ---------- 14. Calculadora / ábaco ---------- */.calc{border:1px solid var(--lin2);border-radius:14px;background:var(--sup);padding:1rem;margin:1.4rem 0}
 .calc h3{margin:.1rem 0 .8rem}
@@ -744,6 +833,8 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   .f,.katex-display{overflow-x:auto;overflow-y:hidden}
   .tri-filtro-pie{display:none}
   details.tri-aux .grid2{grid-template-columns:1fr}
+  /* tarjetas condensadas: ya van apiladas y centradas desde el diseño base */
+  .tri-card.cond{padding:.4rem .5rem .45rem}
 }
 @media (max-width:430px){
   .contenido{padding-left:.9rem;padding-right:.9rem}
@@ -852,7 +943,7 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   .tri-card h4{font-size:7.6pt;margin:0 0 1pt}
   .tri{max-width:33mm}
   .tri svg path{stroke:#000;stroke-opacity:.8;stroke-width:2.2}
-  .tri>span,.tri .katex{font-size:7.4pt}
+  .tri>span,.tri .katex{font-size:7.4pt!important}
   .tri>span:not(.tapado):not(.tap){cursor:default}
   .tri>span.tap{color:var(--txt)!important}
   .tri>span.tap::after{content:""}
@@ -872,6 +963,32 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   .tri-vars .v-s{color:#000}
   .tri-vars b{color:#000;font-size:5.9pt}
   .solo-impresion{display:block!important}
+  /* opciones de impresión de la sección Chuletas */
+  .tri-modo{display:none!important}
+  html[data-tri-off~="titulo"] .contenido[data-cap="triangulos"] h1,
+  html[data-tri-off~="titulo"] .contenido[data-cap="triangulos"] .bajada{display:none!important}
+  html[data-tri-off~="reglas"] #tri-reglas,
+  html[data-tri-off~="sumas"] .tri-sec.tri-sumas,
+  html[data-tri-off~="notri"] #tri-notri,
+  html[data-tri-off~="chuleta"] #tri-chuleta,
+  html[data-tri-off~="check"] #tri-check{display:none!important}
+  /* la versión condensada imprime de a dos por hoja */
+  .contenido.ver-cond .tris{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6pt}
+  .contenido.ver-cond .tri-card.cond{width:auto;max-width:none;margin:0;padding:3pt 4pt 3pt;break-inside:avoid}
+  .contenido.ver-cond .cond-cuerpo{
+    display:grid;grid-template-columns:minmax(0,36%) minmax(0,1fr);
+    gap:3pt;align-items:center;margin-top:0;
+  }
+  .contenido.ver-cond .cond-eq-box{background:none;border:0;border-radius:0;padding:0;margin:0;min-width:0}
+  .contenido.ver-cond .cond-cap{display:none}
+  .contenido.ver-cond .tri-card.cond .tri{width:30mm;max-width:30mm;margin:0 auto}
+  .contenido.ver-cond .cond-eq{flex:initial;padding:0;gap:1.6pt;justify-content:flex-start}
+  .contenido.ver-cond .cond-eq li{font-size:6.4pt;overflow:visible;border:0;padding:0;text-align:left}
+  .contenido.ver-cond .cond-eq li .katex{font-size:1em}
+  .contenido.ver-cond .cond-cuerpo .tri-nota{grid-column:1/-1;margin-top:1pt}
+  .contenido.ver-cond .tri-card.cond .tri-des{background:none;border:0;padding:0;margin:0;flex:none}
+  .contenido.ver-cond .tri-des>span{text-align:left}
+  .contenido.ver-cond .tri-nota{text-align:left}
 }
 @media screen{
   .solo-impresion{display:none}
