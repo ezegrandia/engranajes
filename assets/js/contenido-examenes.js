@@ -114,14 +114,15 @@
 
 <div class="examenes-indice no-print">
 <p class="indice-tit">Ir directo a un examen o ejercicio</p>
-<div class="indice-fila"><span class="indice-anio">02/12/2025</span><a href="#examenes/e2025">Examen</a><a href="#examenes/e2025-a">A</a><a href="#examenes/e2025-b">B</a><a href="#examenes/e2025-c">C</a></div>
 <div class="indice-fila"><span class="indice-anio">22/11/2022</span><a href="#examenes/e2022">Examen</a><a href="#examenes/e2022-a">A</a><a href="#examenes/e2022-b">B</a></div>
+<div class="indice-fila"><span class="indice-anio">02/12/2025</span><a href="#examenes/e2025">Examen</a><a href="#examenes/e2025-a">A</a><a href="#examenes/e2025-b">B</a><a href="#examenes/e2025-c">C</a></div>
 <div class="indice-fila"><span class="indice-anio">17/03/2026</span><a href="#examenes/e2026">Examen</a><a href="#examenes/e2026-a">A</a><a href="#examenes/e2026-b">B</a><a href="#examenes/e2026-c">C</a></div>
 <p class="indice-pie">Cada examen y cada ejercicio están plegados: abrí solo el que querés leer.</p>
 </div>
 
-<div class="caja truco">
-<p class="caja-tit">Cómo leer esta resolución</p>
+<details class="caja caja-plegable truco">
+<summary class="caja-sum">Cómo leer esta resolución</summary>
+<div class="caja-cuerpo">
 <ol class="pasos">
 <li><strong>Datos numerados.</strong> Cada ejercicio abre con una tabla D1, D2… que dice el valor, la unidad y de dónde se sacó (enunciado, figura, tabla o un paso anterior).</li>
 <li><strong>Un paso = un cálculo.</strong> Cada paso tiene un título, una explicación breve, y un bloque con tres renglones: <em>Fórmula</em> (o <em>Tabla</em>, cuando el valor se busca), <em>Reemplazo</em> y <em>Resultado</em>.</li>
@@ -129,9 +130,11 @@
 <li><strong>Resultado y chequeo.</strong> Al final de cada ejercicio están la tabla para copiar en el examen y un chequeo rápido para detectar errores de cadena o de unidades.</li>
 </ol>
 </div>
+</details>
 
-<div class="caja idea">
-<p class="caja-tit">El método, en 5 pasos</p>
+<details class="caja caja-plegable idea">
+<summary class="caja-sum">El método, en 5 pasos</summary>
+<div class="caja-cuerpo">
 <ol class="pasos">
 <li>Volcar los datos en la tabla D1…Dn, con unidad y fuente.</li>
 <li>Armar la cadena cinemática eje por eje, aunque no la pidan.</li>
@@ -140,13 +143,16 @@
 <li>Verificar unidades y f ≥ 1,2; comparar la relación total con el producto de las parciales.</li>
 </ol>
 </div>
+</details>
 
 
 
-<div class="caja dato">
-<p class="caja-tit">Antes de empezar</p>
+<details class="caja caja-plegable dato">
+<summary class="caja-sum">Antes de empezar</summary>
+<div class="caja-cuerpo">
 <p>Los datos están transcriptos de las hojas digitalizadas. Si en tu copia algún número no coincide, avisá y se corrige en la hoja y acá. Las respuestas manuscritas de las fotos no siempre son correctas: la referencia es esta resolución y la hoja con resultados.</p>
 </div>
+</details>
 `;
 
   /* ======================================================================
@@ -823,8 +829,8 @@
 <table class="tec compacta">
 <thead><tr><th>Examen</th><th class="num">A</th><th class="num">B</th><th class="num">C</th><th class="num">Total</th><th>Tiempo</th></tr></thead>
 <tbody>
-<tr><td>02/12/2025</td><td class="num">40</td><td class="num">30</td><td class="num">30</td><td class="num">100</td><td>80 min</td></tr>
 <tr><td>22/11/2022</td><td class="num">60</td><td class="num">40</td><td class="num">—</td><td class="num">100</td><td>60 min</td></tr>
+<tr><td>02/12/2025</td><td class="num">40</td><td class="num">30</td><td class="num">30</td><td class="num">100</td><td>80 min</td></tr>
 <tr><td>17/03/2026 (recup.)</td><td class="num">40</td><td class="num">30</td><td class="num">30</td><td class="num">100</td><td>70 min</td></tr>
 </tbody>
 </table>
@@ -848,7 +854,7 @@
     id: "examenes",
     grupo: "7 · Exámenes resueltos",
     titulo: "Exámenes resueltos (3)",
-    html: H + examen2025() + examen2022() + examen2026() + cierre()
+    html: H + examen2022() + examen2025() + examen2026() + cierre()
   });
 
   /* Convierte los exámenes y los ejercicios en <details> plegables.

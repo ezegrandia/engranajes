@@ -253,22 +253,42 @@
 
   /* ---------- menú móvil ---------- */
   var sidebar = $("#sidebar"), velo = $("#velo"), btnMenu = $("#btn-menu");
+  function esDesktop() {
+    return window.matchMedia("(min-width: 941px)").matches;
+  }
   function abrirMenu() {
+    if (esDesktop()) {
+      document.body.classList.remove("menu-cerrado");
+      btnMenu.setAttribute("aria-expanded", "true");
+      btnMenu.setAttribute("aria-label", "Ocultar menú");
+      return;
+    }
     sidebar.classList.add("abierto");
     velo.hidden = false;
     btnMenu.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
   }
   function cerrarMenu() {
+    if (esDesktop()) return;
     sidebar.classList.remove("abierto");
     velo.hidden = true;
     btnMenu.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   }
   btnMenu.addEventListener("click", function () {
+    if (esDesktop()) {
+      var cerrado = document.body.classList.toggle("menu-cerrado");
+      btnMenu.setAttribute("aria-expanded", cerrado ? "false" : "true");
+      btnMenu.setAttribute("aria-label", cerrado ? "Mostrar menú" : "Ocultar menú");
+      return;
+    }
     if (sidebar.classList.contains("abierto")) cerrarMenu(); else abrirMenu();
   });
   velo.addEventListener("click", cerrarMenu);
+  if (esDesktop()) {
+    btnMenu.setAttribute("aria-expanded", "true");
+    btnMenu.setAttribute("aria-label", "Ocultar menú");
+  }
   $("#btn-buscar").addEventListener("click", function () {
     abrirMenu();
     setTimeout(function () { buscarInput.focus(); }, 250);

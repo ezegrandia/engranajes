@@ -91,7 +91,7 @@ Si preferís subir la carpeta tal cual, la URL será
 | **4 · Reductores** | Trenes de engranajes · Trenes epicicloidales · Tipos, construcción y lubricación · Práctico de reductores resuelto (7 problemas) |
 | **5 · Estudio** | Resumen imprimible (B/N) · Cuestionario (78 preguntas) · Preguntas de desarrollo (29) |
 | **6 · Chuletas** | Triángulos de despeje: los 38 triángulos de la materia, con las tres lecturas de cada uno |
-| **7 · Exámenes resueltos** | 02/12/2025 (Comisión B) · 22/11/2022 · Recuperatorio 17/03/2026 (Comisión B), con la resolución completa paso a paso · **Hojas de examen A4** (en blanco y con resultados) |
+| **7 · Exámenes resueltos** | 22/11/2022 · 02/12/2025 (Comisión B) · Recuperatorio 17/03/2026 (Comisión B), con la resolución completa paso a paso · **Hojas de examen A4** (en blanco y con resultados) |
 
 ### Funciones
 
@@ -152,8 +152,8 @@ Si preferís subir la carpeta tal cual, la URL será
   abre solo con las fórmulas que la contienen, con el conteo en la cabecera y sin salir de la sección.
   Notación cuidada: **V** (mayúscula) es la velocidad tangencial [m/s] y **v** (minúscula) el vacío del diente
   [mm]; ese aviso está en las reglas, en el formulario y en la teoría, y la calculadora muestra las dos filas.
-- **Exámenes resueltos** (sección nueva): tres exámenes reales de la cátedra —los finales del 02/12/2025 y
-  del 22/11/2022 y el recuperatorio del 17/03/2026— resueltos como una **hoja de alumno**: cada ejercicio
+- **Exámenes resueltos** (sección nueva): tres exámenes reales de la cátedra —el final del 22/11/2022,
+  el del 02/12/2025 y el recuperatorio del 17/03/2026— resueltos como una **hoja de alumno**: cada ejercicio
   abre con una tabla de **datos numerados D1…Dn** (valor, unidad y de dónde sale) y sigue **un paso por
   cálculo**, con tres renglones: **Fórmula → Reemplazo → Resultado**, más la fuente (“De dónde sale”) al pie.
   Al final de cada ejercicio están la **tabla para copiar en el examen** y un **chequeo** rápido. También
@@ -161,8 +161,10 @@ Si preferís subir la carpeta tal cual, la URL será
   y los cinco errores que más cuestan.
 - **Plegado por defecto**: los tres exámenes y sus ejercicios A/B/C arrancan **cerrados**; se abren con un
   clic y hay un **índice superior** para saltar directo a un examen o a un ejercicio (el enlace abre los
-  desplegables que hagan falta). Dentro de cada paso, el botón **“Explicación más extensa”** despliega el
-  porqué de la fórmula, qué controlar y con qué datos se resolvió.
+  desplegables que hagan falta). Los cuadros de **cómo leer**, **el método** y **antes de empezar** también
+  arrancan cerrados. Dentro de cada paso, el botón **“Explicación más extensa”** despliega el porqué de la
+  fórmula, qué controlar y con qué datos se resolvió. El botón de menú (☰) ahora **oculta y muestra la barra
+  lateral también en escritorio**, no solo en el celular.
 - **Hojas de examen A4** (sección nueva): los tres exámenes **digitalizados**, con el mismo formato de la
   hoja que se entrega (A4, encabezado, tablas y esquemas vectoriales). Se pueden ver **en blanco** para
   resolverlos a mano o **con los resultados colocados** (valores en azul y sello RESUELTO), y se imprimen

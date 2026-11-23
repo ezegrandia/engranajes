@@ -266,6 +266,27 @@ a:hover{text-decoration:underline}
 }
 .caja.respuesta .caja-tit{color:var(--ac)}
 
+/* cajas de texto plegables (cómo leer, método, antes de empezar) */
+.caja.caja-plegable{padding:0;overflow:hidden}
+.caja-sum{
+  display:flex;align-items:center;gap:.45rem;padding:.72rem .95rem;
+  cursor:pointer;list-style:none;font-weight:750;font-size:.94rem;letter-spacing:-.005em;
+  background:transparent;
+}
+.caja-sum::-webkit-details-marker{display:none}
+.examen-sum::before,.ejercicio-sum::before{display:none}
+.caja-sum::before,.paso-mas summary::before{
+  position:static!important;left:auto!important;top:auto!important;
+  width:auto!important;height:auto!important;border:0!important;
+  transform:none!important;flex:none;
+}
+.caja-sum::before{content:"+";font-size:1rem;line-height:1;font-weight:800}
+.caja-plegable[open] > .caja-sum::before{content:"−"}
+.caja-cuerpo{padding:0 .95rem .8rem}
+.caja-plegable.truco > .caja-sum{color:var(--amar)}
+.caja-plegable.idea > .caja-sum{color:var(--ac)}
+.caja-plegable.dato > .caja-sum{color:var(--azul)}
+
 .resultado{
   display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;
   margin:.9rem 0;padding:.6rem .85rem;border-radius:10px;
@@ -789,7 +810,7 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
     position:fixed;top:57px;left:0;bottom:0;height:auto;width:min(86vw,320px);z-index:50;
     transform:translateX(-102%);transition:transform .24s ease;box-shadow:12px 0 32px rgba(0,0,0,.18);
   }
-  .sidebar.abierto{transform:none}
+  .sidebar.abierto{transform:none!important}
   .contenido{padding-top:1.1rem}
   .marca-txt small{display:none}
   .solo-movil{display:inline-flex}
@@ -797,6 +818,11 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
 @media (min-width:941px){
   .solo-movil{display:none}
   .velo{display:none!important}
+  body.menu-cerrado .layout{grid-template-columns:0 minmax(0,1fr)}
+  body.menu-cerrado .sidebar{
+    width:0;min-width:0;padding:0;border:0;overflow:hidden;visibility:hidden;
+  }
+  body.menu-cerrado .contenido{grid-column:2}
 }
 @media (max-width:620px){
   body{font-size:16px}
@@ -915,8 +941,8 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   border-radius:8px;background:var(--sup2);
 }
 .paso-mas summary{
-  display:flex;align-items:center;gap:.35rem;cursor:pointer;list-style:none;
-  font-size:.71rem;font-weight:800;color:var(--ac);
+  display:flex;align-items:center;gap:.35rem;padding:.1rem 0;cursor:pointer;list-style:none;
+  background:transparent;font-size:.71rem;font-weight:800;color:var(--ac);
 }
 .paso-mas summary::-webkit-details-marker{display:none}
 .paso-mas summary::before{content:"+";font-size:.9rem;line-height:1}
