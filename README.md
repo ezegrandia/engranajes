@@ -71,6 +71,10 @@ Si preferís subir la carpeta tal cual, la URL será
 |---|
 | ![Exámenes resueltos](vista-examenes.png) |
 
+| Hojas de examen A4: el examen digitalizado, en blanco y con los resultados colocados |
+|---|
+| ![Hojas de examen](vista-hojas.png) |
+
 | Resumen impreso en A4 (blanco y negro) |
 |---|
 | ![Resumen impreso](vista-impresion.png) |
@@ -87,7 +91,7 @@ Si preferís subir la carpeta tal cual, la URL será
 | **4 · Reductores** | Trenes de engranajes · Trenes epicicloidales · Tipos, construcción y lubricación · Práctico de reductores resuelto (7 problemas) |
 | **5 · Estudio** | Resumen imprimible (B/N) · Cuestionario (78 preguntas) · Preguntas de desarrollo (29) |
 | **6 · Chuletas** | Triángulos de despeje: los 38 triángulos de la materia, con las tres lecturas de cada uno |
-| **7 · Exámenes resueltos** | 02/12/2025 (Comisión B) · 22/11/2022 · Recuperatorio 17/03/2026 (Comisión B), con la resolución completa paso a paso |
+| **7 · Exámenes resueltos** | 02/12/2025 (Comisión B) · 22/11/2022 · Recuperatorio 17/03/2026 (Comisión B), con la resolución completa paso a paso · **Hojas de examen A4** (en blanco y con resultados) |
 
 ### Funciones
 
@@ -154,12 +158,17 @@ Si preferís subir la carpeta tal cual, la URL será
   ejercicio tiene su **tabla de resultados** como la pide el examen, el **porqué** de cada fórmula y avisos
   sobre las trampas típicas (dientes confundidos, unidades, qué S<sub>t</sub> usar). Arriba hay un índice de
   los tres exámenes y al final, cómo se reparten los puntos y los cinco errores que más cuestan.
+- **Hojas de examen A4** (sección nueva): los tres exámenes **digitalizados**, con el mismo formato de la
+  hoja que se entrega (A4, encabezado, tablas y esquemas vectoriales). Se pueden ver **en blanco** para
+  resolverlos a mano o **con los resultados colocados** (valores en azul y sello RESUELTO), y se imprimen
+  en una hoja cada uno. La hoja se ajusta al ancho de la pantalla y tiene botones para abrirla en pestaña
+  o imprimir; desde cada resolución hay un enlace directo a su hoja.
 - **Tablas que se apilan en el celular**: en pantallas chicas las tablas de fórmulas del formulario y la de
   nomenclatura de la portada se convierten en tarjetas (título, fórmula y observación), sin scroll horizontal.
 - **Buscador** de temas, fórmulas y secciones (atajo: `/`).
 - **Accesos rápidos** en la barra lateral, debajo del buscador: **Formulario completo**, **Triángulos de
-  despeje** y **Exámenes resueltos**, que son las páginas de consulta. Se marcan solas cuando estás en ese
-  capítulo y, en el celular, cierran el menú al tocarlas.
+  despeje**, **Exámenes resueltos** y **Hojas de examen**, que son las páginas de consulta. Se marcan solas
+  cuando estás en ese capítulo y, en el celular, cierran el menú al tocarlas.
 - **Calculadoras interactivas**:
   - geometría completa de un par de engranajes;
   - predimensionamiento del módulo + verificación por Lewis;

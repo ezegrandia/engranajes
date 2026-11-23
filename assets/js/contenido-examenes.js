@@ -8,6 +8,7 @@ window.CAPITULOS.push({
   html: String.raw`
 <h1>Exámenes resueltos</h1>
 <p class="bajada">Tres exámenes reales de la cátedra —dos finales de comisión y un recuperatorio— resueltos completos, paso a paso y con todas las tablas llenas. Sirven para practicar el formato, medirte con el tiempo y comparar con lo que está escrito a lápiz en las fotos.</p>
+<p class="hojas-mini no-print">Las hojas para imprimir están en <a href="#hojas">Hojas de examen (A4)</a>: en blanco y con los resultados colocados.</p>
 
 <div class="caja idea">
 <p class="caja-tit">Qué tienen en común los tres</p>
@@ -15,13 +16,15 @@ window.CAPITULOS.push({
 </div>
 
 <div class="caja truco">
-<p class="caja-tit">Cómo encarar el examen en 60–80 minutos</p>
+<p class="caja-tit">El método, en 5 pasos (y un checkpoint al final)</p>
 <ol class="pasos">
-<li><strong>Primero la cadena cinemática</strong>, aunque no la pidan. Saber qué eje gira a qué rpm te ordena todo y evita usar el par equivocado en Lewis.</li>
-<li><strong>Geometría en tabla</strong>: D<sub>p</sub> = m·z, D<sub>e</sub> = D<sub>p</sub> + 2m, D<sub>i</sub> = D<sub>p</sub> − 2,5m, D<sub>b</sub> = D<sub>p</sub>·cos φ, p<sub>c</sub> = π·m. Son cuentas cortas y todas valen puntos.</li>
-<li><strong>Lewis solo en el par que piden</strong>, con el módulo y el ancho de <em>ese</em> par. No mezcles el módulo de la otra etapa.</li>
-<li><strong>Verificá unidades</strong>: V en m/s (D<sub>p</sub> en mm → dividir por 60 000), W<sub>t</sub> en N, σ en MPa. Un resultado en kN o en mm/s es un error de unidad, no de cuenta.</li>
+<li><strong>Volcá los datos antes de calcular.</strong> Motor (rpm y kW), relaciones previas (polea, cadena, sin fin), módulos, dientes y ancho de cara. Si un dato no está en el enunciado, está en la figura: búscalo ahí y anotalo con su unidad.</li>
+<li><strong>Armá la cadena cinemática</strong>, aunque no la pidan. Escribí una tabla eje por eje con su rpm. Saber qué eje gira a qué velocidad te ordena todo y evita usar el par equivocado en Lewis.</li>
+<li><strong>Geometría en tabla</strong>: D<sub>p</sub> = m·z, D<sub>e</sub> = D<sub>p</sub> + 2m, D<sub>i</sub> = D<sub>p</sub> − 2,5m, D<sub>b</sub> = D<sub>p</sub>·cos φ, p<sub>c</sub> = π·m. Son cuentas cortas y todas valen puntos; hacelas una vez y reusá los valores.</li>
+<li><strong>Lewis solo en el par que piden</strong>, con el módulo y el ancho de <em>ese</em> par: V, W<sub>t</sub> = H/V, Y de tabla, K<sub>v</sub> según el tallado, σ = K<sub>v</sub>W<sub>t</sub>/(F·m·Y), S<sub>t</sub> según material y dureza, f = S<sub>t</sub>/σ.</li>
+<li><strong>Verificá y redondeá</strong>: V en m/s (D<sub>p</sub> en mm → dividir por 60 000), W<sub>t</sub> en N, σ y S<sub>t</sub> en MPa, f ≥ 1,2. Un resultado en kN o en mm/s es un error de unidad, no de cuenta.</li>
 </ol>
+<div class="aviso"><strong>Checkpoint:</strong> la relación total calculada con las rpm (n<sub>entrada</sub>/n<sub>salida</sub>) tiene que dar igual que el producto de todas las relaciones parciales. Si no cierra, el error está en la cadena, no en las fórmulas.</div>
 </div>
 
 <div class="caja dato">
@@ -33,11 +36,12 @@ window.CAPITULOS.push({
 <p class="caja-tit">Los tres exámenes</p>
 <p><a href="#examenes/e2025"><strong>02/12/2025 · Comisión B</strong></a> — tren con reductor sin fin-corona y cadena, Lewis del par 1–2 y reductor helicoidal. 80 minutos, A 40 + B 30 + C 30.</p>
 <p><a href="#examenes/e2022"><strong>22/11/2022</strong></a> — tren de cinco ruedas con engrane intermedio y Lewis del par D–E. 60 minutos, A 60 + B 40.</p>
-<p><a href="#examenes/e2026"><strong>Recuperatorio 17/03/2026 · Comisión B</strong></a> — poleas trapezoidales y cadena antes de los engranes, Lewis del par 1–2 y reductor de tres etapas. 80 minutos, A 40 + B 30 + C 30.</p>
+<p><a href="#examenes/e2026"><strong>Recuperatorio 17/03/2026 · Comisión B</strong></a> — poleas trapezoidales y cadena antes de los engranes, Lewis del par 1–2 y reductor de tres etapas. 70 minutos, A 40 + B 30 + C 30.</p>
 </div>
 
 <h2 id="examenes--e2025">Examen 02/12/2025 · Comisión B</h2>
 <p class="bajada">Módulo 03: Engranajes · 80 minutos · Ejercicio A 40 pts, B 30 pts, C 30 pts. Es el examen más completo de los tres: tren con reductor sin fin-corona y cadena, Lewis del primer par y reductor helicoidal de tres etapas.</p>
+<p class="hojas-mini no-print">Hoja A4: <a href="#hojas" onclick="hojaAbrir('2025','blank')">en blanco</a> · <a href="#hojas" onclick="hojaAbrir('2025','res')">con resultados</a></p>
 
 <div class="tabla-wrap">
 <table class="tec compacta">
@@ -131,6 +135,7 @@ window.CAPITULOS.push({
 </div>
 
 <div class="resultado"><span class="r-lbl">Resultados:</span> <span class="r-val">C<sub>14</sub> = 286,5 mm · n<sub>4</sub> = 6,14 rpm · ω<sub>4</sub> = 0,643 rad/s</span></div>
+<p class="aviso"><strong>Chequeo:</strong> 3000/6,14 = 488,4 y el producto de las reducciones (20 · 2 · 3,412 · 3,579) también da 488,4. Si te dio 18,75 rpm, tomaste 19 dientes para el engrane 2: son 58.</p>
 
 <div class="caja truco">
 <p class="caja-tit">La trampa de este ejercicio</p>
@@ -191,6 +196,7 @@ window.CAPITULOS.push({
 </div>
 
 <div class="resultado"><span class="r-lbl">Resultado:</span> <span class="r-val">σ = 151,96 MPa · S<sub>t</sub> = 220,12 MPa · f<sub>seg</sub> = 1,45 ≥ 1,2 → verifica con poco margen</span></div>
+<p class="aviso"><strong>Chequeo:</strong> si usás la otra recta del 4140 (S<sub>t</sub> = 216,2 MPa), f = 1,42: la conclusión no cambia. Para que no verifique haría falta un material con S<sub>t</sub> &lt; 182 MPa (σ·1,2).</p>
 
 <div class="caja idea">
 <p class="caja-tit">Lectura del resultado</p>
@@ -263,6 +269,7 @@ window.CAPITULOS.push({
 
 <h2 id="examenes--e2022">Examen 22/11/2022</h2>
 <p class="bajada">Módulo 03: Engranajes · 60 minutos · Ejercicio A 60 pts y Ejercicio B 40 pts. No hay reductor helicoidal: el examen se concentra en el tren de cinco ruedas y en la verificación del par D–E.</p>
+<p class="hojas-mini no-print">Hoja A4: <a href="#hojas" onclick="hojaAbrir('2022','blank')">en blanco</a> · <a href="#hojas" onclick="hojaAbrir('2022','res')">con resultados</a></p>
 
 <h3>Ejercicio A · Tren del elevador A-B-C-D-E (60 pts)</h3>
 
@@ -313,6 +320,7 @@ De D a E:
 </div>
 
 <div class="resultado"><span class="r-lbl">Resultados:</span> <span class="r-val">C<sub>14</sub> = 367 mm · n<sub>E</sub> = 114,29 rpm · ω<sub>E</sub> = 11,97 rad/s</span></div>
+<p class="aviso"><strong>Chequeo:</strong> 1200/114,29 = 10,5 y el producto (70/20)·(22/18)·(54/22) = 10,5. D se cancela porque es intermedio: si te quedó 22/22 en la cuenta, está bien; si te quedó 22 suelto, revisá.</p>
 
 <div class="caja truco">
 <p class="caja-tit">Las dos holguras no son lo mismo</p>
@@ -373,6 +381,7 @@ De D a E:
 </div>
 
 <div class="resultado"><span class="r-lbl">Resultado:</span> <span class="r-val">σ = 55,07 MPa · S<sub>t</sub> = 240 MPa · f<sub>seg</sub> = 4,36 → sobra material</span></div>
+<p class="aviso"><strong>Chequeo:</strong> con 0,75 kW en vez de 2 kW, σ baja a 20,7 MPa y f sube a 11,6: si te dio eso, la potencia está mal. La del examen es 2 kW.</p>
 
 <div class="caja idea">
 <p class="caja-tit">Por qué acá S<sub>t</sub> es tan alto</p>
@@ -385,36 +394,54 @@ De D a E:
 </div>
 
 <h2 id="examenes--e2026">Recuperatorio 17/03/2026 · Comisión B</h2>
-<p class="bajada">Módulo 03: Engranajes · 80 minutos · Ejercicio A 40 pts, B 30 pts, C 30 pts. Es el examen con más transmisiones previas: poleas trapezoidales y cadena antes de los engranes.</p>
+<p class="bajada">Módulo 03: Engranajes · 70 minutos · Ejercicio A 40 pts, B 30 pts, C 30 pts. Ojo con los datos: el motor es de <strong>1800 rpm</strong>, la cadena es <strong>ANSI 60</strong> y los engranes son <strong>15/52</strong> y <strong>19/76</strong>. Es el examen con más transmisiones previas: polea trapezoidal, cadena y dos etapas de engranes.</p>
+<p class="hojas-mini no-print">Hoja A4: <a href="#hojas" onclick="hojaAbrir('2026','blank')">en blanco</a> · <a href="#hojas" onclick="hojaAbrir('2026','res')">con resultados</a></p>
 
 <h3>Ejercicio A · Tren con poleas y cadena (40 pts)</h3>
 
 <div class="caja dato">
 <p class="caja-tit">Enunciado</p>
-<p>El tren de engranajes mostrado se usa en una máquina industrial. La primera etapa de engranajes cilíndricos es de diente recto con <strong>módulo 2,5</strong> y ángulo de presión 20°, y la segunda etapa es de diente recto con <strong>módulo 4</strong> y ángulo de presión 20°. Calcular los datos solicitados en las tablas anexas.</p>
+<p>El tren de engranes mostrado se usa en una máquina industrial. La primera etapa de engranajes cilíndricos es de diente recto con <strong>módulo 2,5</strong> y ángulo de presión 20°, y la segunda etapa es de diente recto con <strong>módulo 4</strong> y ángulo de presión 20°. Calcular los datos solicitados en las tablas anexas.</p>
 </div>
 
 <div class="ej-datos datos-largos">
-  <div><dt>Motor</dt><dd>1500 rpm · 1 kW</dd></div>
+  <div><dt>Motor</dt><dd>1800 rpm · 1 kW</dd></div>
   <div><dt>Poleas</dt><dd>trapezoidales B · 120 mm → 170 mm</dd></div>
-  <div><dt>Cadena</dt><dd>ANSI 80 · 17 dientes → 42 dientes</dd></div>
-  <div><dt>1.ª etapa</dt><dd>m = 2,5 mm · z₁ = 13 · z₂ = 52</dd></div>
-  <div><dt>2.ª etapa</dt><dd>m = 4 mm · z₃ = 19 · z₄ = 78</dd></div>
+  <div><dt>Cadena</dt><dd>ANSI 60 · 17 dientes → 42 dientes</dd></div>
+  <div><dt>1.ª etapa</dt><dd>m = 2,5 mm · z₁ = 15 · z₂ = 52</dd></div>
+  <div><dt>2.ª etapa</dt><dd>m = 4 mm · z₃ = 19 · z₄ = 76</dd></div>
 </div>
 
-<p>Acá hay <strong>dos reducciones antes de los engranes</strong>: la polea (120/170) y la cadena (17/42). Las dos multiplican por z<sub>conductor</sub>/z<sub>conducido</sub> y las dos hay que aplicarlas; olvidarse una es el error más común.</p>
+<p>Antes de los engranes hay <strong>dos reducciones</strong>: la polea (120/170) y la cadena (17/42). Las dos multiplican por z<sub>conductor</sub>/z<sub>conducido</sub>. Si te saltás una, todos los resultados de B quedan mal, aunque el procedimiento sea correcto.</p>
+
+<div class="tabla-wrap">
+<table class="tec compacta">
+<thead><tr><th>Punto</th><th>Elemento</th><th class="num">n [rpm]</th></tr></thead>
+<tbody>
+<tr><td>Motor</td><td>—</td><td class="num">1800</td></tr>
+<tr><td>Eje de la polea 170</td><td>polea B 120 → 170</td><td class="num">1270,59</td></tr>
+<tr><td>Eje 1</td><td>piñón 17 + engrane 1</td><td class="num">514,29</td></tr>
+<tr><td>Eje 2</td><td>engrane 2 + engrane 3</td><td class="num">148,35</td></tr>
+<tr><td>Eje 4 (salida)</td><td>engrane 4</td><td class="num">37,09</td></tr>
+</tbody>
+</table>
+</div>
 
 <ol class="pasos">
-<li><strong>Velocidad del eje 1.</strong> Primero la polea, después la cadena:
-<div class="f">$$ \begin{gathered} n_{polea} = 1500\cdot\frac{120}{170} = 1058{,}82\ \text{rpm} \\ n_1 = 1058{,}82\cdot\frac{17}{42} = 428{,}57\ \text{rpm} \end{gathered} $$</div></li>
-<li><strong>Velocidad del eje 4.</strong> Engrane 1 → 2 y engrane 3 → 4:
-<div class="f">$$ n_4 = 428{,}57\cdot\frac{13}{52}\cdot\frac{19}{78} $$</div>
-<div class="f">$$ n_4 = 428{,}57\cdot 0{,}25\cdot 0{,}24359 = 26{,}10\ \text{rpm} $$</div>
-<div class="f">$$ \omega_4 = 26{,}10\cdot\frac{2\pi}{60} = 2{,}733\ \text{rad/s} $$</div></li>
-<li><strong>Geometría de 1 y 2</strong> (m = 2,5):
-<div class="f">$$ \begin{gathered} a = 2{,}5 \\ b = 3{,}125 \\ p_c = 7{,}854 \\ c = 0{,}625 \\ h_c = 0{,}1571 \\ D_{p1} = 2{,}5\cdot 13 = 32{,}5 \\ D_{p2} = 2{,}5\cdot 52 = 130 \\ D_{b1} = 32{,}5\cos 20^\circ = 30{,}54 \\ D_{b2} = 130\cos 20^\circ = 122{,}16 \\ D_{e1} = 37{,}5 \\ D_{e2} = 135 \\ D_{i1} = 26{,}25 \\ D_{i2} = 123{,}75 \end{gathered} $$</div></li>
-<li><strong>Distancia entre centros eje 1 y eje 4.</strong>
-<div class="f">$$ \begin{gathered} a_{12} = \frac{32{,}5+130}{2} = 81{,}25\ \text{mm} \\ a_{34} = \frac{4\cdot 19+4\cdot 78}{2} = \frac{76+312}{2} = 194\ \text{mm} \\ C_{14} = 81{,}25 + 194 = 275{,}25\ \text{mm} \end{gathered} $$</div></li>
+<li><strong>Polea trapezoidal.</strong> La polea del motor es la de 120 mm y la conducida la de 170 mm:
+<div class="f">$$ n_{polea} = 1800\cdot\frac{120}{170} = 1270{,}59\ \text{rpm} $$</div></li>
+<li><strong>Cadena ANSI 60.</strong> El piñón de 17 dientes mueve al de 42:
+<div class="f">$$ n_1 = 1270{,}59\cdot\frac{17}{42} = 514{,}29\ \text{rpm} $$</div></li>
+<li><strong>Etapa 1–2.</strong> El engrane 1 (15 dientes) mueve al 2 (52):
+<div class="f">$$ n_2 = 514{,}29\cdot\frac{15}{52} = 148{,}35\ \text{rpm} $$</div></li>
+<li><strong>Etapa 3–4.</strong> El engrane 3 (19), solidario al 2, mueve al 4 (76):
+<div class="f">$$ n_4 = 148{,}35\cdot\frac{19}{76} = 37{,}09\ \text{rpm} $$</div>
+<div class="f">$$ \omega_4 = 37{,}09\cdot\frac{2\pi}{60} = 3{,}884\ \text{rad/s} $$</div></li>
+<li><strong>Geometría de 1 y 2</strong> (m = 2,5). Adendo, dedendo, paso y holguras son comunes:
+<div class="f">$$ \begin{gathered} a = 2{,}5 \\ b = 3{,}125 \\ p_c = 7{,}854 \\ c = 0{,}625 \\ h_c = 0{,}1571 \end{gathered} $$</div>
+<div class="f">$$ \begin{gathered} D_{p1} = 2{,}5\cdot 15 = 37{,}5 \\ D_{p2} = 2{,}5\cdot 52 = 130 \\ D_{b1} = 37{,}5\cos 20^\circ = 35{,}24 \\ D_{b2} = 130\cos 20^\circ = 122{,}16 \\ D_{e1} = 42{,}5 \\ D_{e2} = 135 \\ D_{i1} = 31{,}25 \\ D_{i2} = 123{,}75 \end{gathered} $$</div></li>
+<li><strong>Distancia entre centros eje 1 y eje 4.</strong> Los engranes 2 y 3 están en el mismo eje, así que se suman las dos etapas:
+<div class="f">$$ \begin{gathered} a_{12} = \frac{37{,}5+130}{2} = 83{,}75\ \text{mm} \\ a_{34} = \frac{4\cdot 19+4\cdot 76}{2} = \frac{76+304}{2} = 190\ \text{mm} \\ C_{14} = 83{,}75 + 190 = 273{,}75\ \text{mm} \end{gathered} $$</div></li>
 </ol>
 
 <div class="tabla-wrap">
@@ -423,10 +450,10 @@ De D a E:
 <tbody>
 <tr><td>Adendo</td><td class="num">2,5</td><td class="num">2,5</td><td>mm</td></tr>
 <tr><td>Dedendo</td><td class="num">3,125</td><td class="num">3,125</td><td>mm</td></tr>
-<tr><td>Diámetro primitivo</td><td class="num">32,5</td><td class="num">130</td><td>mm</td></tr>
-<tr><td>Diámetro de base</td><td class="num">30,54</td><td class="num">122,16</td><td>mm</td></tr>
-<tr><td>Diámetro de adendo</td><td class="num">37,5</td><td class="num">135</td><td>mm</td></tr>
-<tr><td>Diámetro de dedendo</td><td class="num">26,25</td><td class="num">123,75</td><td>mm</td></tr>
+<tr><td>Diámetro primitivo</td><td class="num">37,5</td><td class="num">130</td><td>mm</td></tr>
+<tr><td>Diámetro de base</td><td class="num">35,24</td><td class="num">122,16</td><td>mm</td></tr>
+<tr><td>Diámetro de adendo</td><td class="num">42,5</td><td class="num">135</td><td>mm</td></tr>
+<tr><td>Diámetro de dedendo</td><td class="num">31,25</td><td class="num">123,75</td><td>mm</td></tr>
 <tr><td>Paso circular</td><td class="num">7,854</td><td class="num">7,854</td><td>mm</td></tr>
 <tr><td>Holgura radial</td><td class="num">0,625</td><td class="num">0,625</td><td>mm</td></tr>
 <tr><td>Holgura circunferencial</td><td class="num">0,1571</td><td class="num">0,1571</td><td>mm</td></tr>
@@ -434,26 +461,26 @@ De D a E:
 </table>
 </div>
 
-<div class="resultado"><span class="r-lbl">Resultados:</span> <span class="r-val">C<sub>14</sub> = 275,25 mm · n<sub>4</sub> = 26,10 rpm · ω<sub>4</sub> = 2,733 rad/s</span></div>
+<div class="resultado"><span class="r-lbl">Resultados:</span> <span class="r-val">C<sub>14</sub> = 273,75 mm · n<sub>4</sub> = 37,09 rpm · ω<sub>4</sub> = 3,884 rad/s</span></div>
 
 <div class="caja truco">
-<p class="caja-tit">Dos reducciones, no una</p>
-<p>La polea baja de 1500 a 1058,82 rpm y la cadena de 1058,82 a 428,57 rpm. Si te saltás la polea, n₁ = 607,14 rpm y todos los resultados de B quedan al doble. La cadena ANSI 80 tiene paso 1 pulgada (25,4 mm), pero para la cinemática no hace falta: solo importan los dientes.</p>
+<p class="caja-tit">Los datos que cambian todo</p>
+<p>En este examen el motor es de <strong>1800 rpm</strong> (no 1500), el engrane 1 tiene <strong>15 dientes</strong> (no 13) y el 4 tiene <strong>76</strong> (no 78). La cadena es <strong>ANSI 60</strong>. Con 1500/13/78 los números no cierran con la tabla del examen: fijate siempre en el dato de la hoja antes de empezar.</p>
 </div>
 
 <h3>Ejercicio B · Lewis del par 1–2 (30 pts)</h3>
 
 <div class="caja dato">
 <p class="caja-tit">Enunciado</p>
-<p>Considerando la transmisión de engrane del ejercicio 1 <strong>(entre engrane 1 y 2)</strong>, y con los siguientes datos: ancho del diente 23 mm; fabricación: tallado por fresadora; material: acero grado 1 completamente endurecido; dureza: 240 HB. Determinar V, W<sub>t</sub>, Y, K<sub>v</sub>, σ, S<sub>t</sub> y f<sub>seg</sub>.</p>
+<p>Considerando la transmisión de engrane del ejercicio 1 <strong>(entre engrane 1 y 2)</strong>, y con los siguientes datos: ancho del diente 25 mm; fabricación: tallado por fresadora; material: acero grado 1 completamente endurecido; dureza: 240 HB. Determinar V, W<sub>t</sub>, Y, K<sub>v</sub>, σ, S<sub>t</sub> y f<sub>seg</sub>.</p>
 </div>
 
 <div class="ej-datos datos-largos">
   <div><dt>Par</dt><dd>1–2 · m = 2,5 mm</dd></div>
-  <div><dt>z₁ / z₂</dt><dd>13 / 52</dd></div>
-  <div><dt>n₁</dt><dd>428,57 rpm</dd></div>
-  <div><dt>D<sub>p1</sub></dt><dd>32,5 mm</dd></div>
-  <div><dt>Ancho F</dt><dd>23 mm</dd></div>
+  <div><dt>z₁ / z₂</dt><dd>15 / 52</dd></div>
+  <div><dt>n₁</dt><dd>514,29 rpm</dd></div>
+  <div><dt>D<sub>p1</sub></dt><dd>37,5 mm</dd></div>
+  <div><dt>Ancho F</dt><dd>25 mm</dd></div>
   <div><dt>Potencia</dt><dd>1 kW = 1000 W</dd></div>
   <div><dt>Material</dt><dd>acero grado 1 · 240 HB</dd></div>
   <div><dt>Tallado</dt><dd>fresadora</dd></div>
@@ -461,42 +488,42 @@ De D a E:
 
 <ol class="pasos">
 <li><strong>Velocidad tangencial.</strong>
-<div class="f">$$ V = \frac{\pi\cdot 32{,}5\cdot 428{,}57}{60\,000} = 0{,}7293\ \text{m/s} $$</div></li>
-<li><strong>Carga tangencial.</strong>
-<div class="f">$$ W_t = \frac{1000}{0{,}7293} = 1371{,}2\ \text{N} $$</div></li>
-<li><strong>Factor geométrico.</strong> Para z₁ = 13 (tabla, φ = 20°, altura completa):
-<div class="f">$$ Y = 0{,}261 $$</div></li>
+<div class="f">$$ V = \frac{\pi\cdot 37{,}5\cdot 514{,}29}{60\,000} = 1{,}0098\ \text{m/s} $$</div></li>
+<li><strong>Carga tangencial.</strong> Con η = 100 %:
+<div class="f">$$ W_t = \frac{1000}{1{,}0098} = 990{,}3\ \text{N} $$</div></li>
+<li><strong>Factor geométrico.</strong> Para z₁ = 15, de tabla:
+<div class="f">$$ Y = 0{,}290 $$</div></li>
 <li><strong>Factor dinámico.</strong> Fresadora:
-<div class="f">$$ K_v = \frac{6{,}1+0{,}7293}{6{,}1} = 1{,}1196 $$</div></li>
+<div class="f">$$ K_v = \frac{6{,}1+1{,}0098}{6{,}1} = 1{,}1655 $$</div></li>
 <li><strong>Esfuerzo aplicado.</strong>
 <div class="f">$$ \sigma = \frac{K_v\,W_t}{F\,m\,Y} $$</div>
-<div class="f">$$ \sigma = \frac{1{,}1196\cdot 1371{,}2}{23\cdot 2{,}5\cdot 0{,}261} = \frac{1535{,}2}{15{,}008} = 102{,}29\ \text{MPa} $$</div></li>
+<div class="f">$$ \sigma = \frac{1{,}1655\cdot 990{,}3}{25\cdot 2{,}5\cdot 0{,}290} = \frac{1154{,}2}{18{,}125} = 63{,}68\ \text{MPa} $$</div></li>
 <li><strong>Tensión admisible.</strong> Acero grado 1 completamente endurecido (figura 14-2):
 <div class="f">$$ S_t = 0{,}533\cdot 240 + 88{,}3 = 216{,}22\ \text{MPa} $$</div></li>
 <li><strong>Factor de seguridad.</strong>
-<div class="f">$$ f_{seg} = \frac{216{,}22}{102{,}29} = 2{,}11 $$</div></li>
+<div class="f">$$ f_{seg} = \frac{216{,}22}{63{,}68} = 3{,}40 $$</div></li>
 </ol>
 
 <div class="tabla-wrap">
 <table class="tec compacta">
 <thead><tr><th>Ítem</th><th class="num">Valor</th><th>Unidad</th></tr></thead>
 <tbody>
-<tr><td>Velocidad tangencial</td><td class="num">0,7293</td><td>m/s</td></tr>
-<tr><td>Carga tangencial</td><td class="num">1371,2</td><td>N</td></tr>
-<tr><td>Factor geométrico</td><td class="num">0,261</td><td>—</td></tr>
-<tr><td>Factor dinámico</td><td class="num">1,1196</td><td>—</td></tr>
-<tr><td>Esfuerzo aplicado</td><td class="num">102,29</td><td>MPa</td></tr>
+<tr><td>Velocidad tangencial</td><td class="num">1,0098</td><td>m/s</td></tr>
+<tr><td>Carga tangencial</td><td class="num">990,3</td><td>N</td></tr>
+<tr><td>Factor geométrico</td><td class="num">0,290</td><td>—</td></tr>
+<tr><td>Factor dinámico</td><td class="num">1,1655</td><td>—</td></tr>
+<tr><td>Esfuerzo aplicado</td><td class="num">63,68</td><td>MPa</td></tr>
 <tr><td>Tensión admisible</td><td class="num">216,22</td><td>MPa</td></tr>
-<tr><td>Factor de seguridad</td><td class="num">2,11</td><td>—</td></tr>
+<tr><td>Factor de seguridad</td><td class="num">3,40</td><td>—</td></tr>
 </tbody>
 </table>
 </div>
 
-<div class="resultado"><span class="r-lbl">Resultado:</span> <span class="r-val">σ = 102,29 MPa · S<sub>t</sub> = 216,22 MPa · f<sub>seg</sub> = 2,11 → verifica</span></div>
+<div class="resultado"><span class="r-lbl">Resultado:</span> <span class="r-val">σ = 63,68 MPa · S<sub>t</sub> = 216,22 MPa · f<sub>seg</sub> = 3,40 → verifica con margen</span></div>
 
 <div class="caja truco">
-<p class="caja-tit">Y para 13 dientes es 0,261</p>
-<p>En la foto figura 0,290, que es el valor de 15 dientes. La tabla de la cátedra da Y = 0,261 para z = 13: el diente de 13 es más chico y más débil, y por eso el esfuerzo sube. Es el único dato que hay que buscar sí o sí en la tabla.</p>
+<p class="caja-tit">Y para 15 dientes es 0,290</p>
+<p>La tabla da Y = 0,290 para z = 15; 0,261 es el valor de 13 dientes. Si usás 0,261 el esfuerzo sube a 70,7 MPa y el factor baja a 3,06: el resultado no es dramático, pero el dato es otro. Es el único valor que hay que buscar en la tabla.</p>
 </div>
 
 <h3>Ejercicio C · Reductor helicoidal de 3 etapas (30 pts)</h3>
@@ -511,24 +538,23 @@ De D a E:
   <div><dt>Módulo normal</dt><dd>m<sub>n</sub> = 4 mm</dd></div>
   <div><dt>Ángulo de hélice</dt><dd>ψ = 12°</dd></div>
   <div><dt>z₁ · z₂ · z₃</dt><dd>17 · 64 · 23</dd></div>
-  <div><dt>z₄ · z₅ · z₆</dt><dd>48 · 17 · 52</dd></div>
+  <div><dt>z₄ · z₅ · z₆</dt><dd>46 · 17 · 52</dd></div>
   <div><dt>Etapas</dt><dd>1–2, 3–4 y 5–6</dd></div>
 </div>
 
 <ol class="pasos">
 <li><strong>Módulo transversal.</strong>
-<div class="f">$$ m_t = \frac{m_n}{\cos 12^\circ} = \frac{4}{\cos 12^\circ} $$</div>
-<div class="f">$$ m_t = \frac{4}{0{,}97815} = 4{,}0894\ \text{mm} $$</div></li>
+<div class="f">$$ m_t = \frac{m_n}{\cos 12^\circ} = \frac{4}{0{,}97815} = 4{,}0894\ \text{mm} $$</div></li>
 <li><strong>Diámetros primitivos.</strong>
-<div class="f">$$ \begin{gathered} D_1 = 4{,}0894\cdot 17 = 69{,}52 \\ D_2 = 4{,}0894\cdot 64 = 261{,}72 \\ D_3 = 4{,}0894\cdot 23 = 94{,}06 \\ D_4 = 4{,}0894\cdot 48 = 196{,}29 \\ D_5 = 4{,}0894\cdot 17 = 69{,}52 \\ D_6 = 4{,}0894\cdot 52 = 212{,}65 \end{gathered} $$</div></li>
+<div class="f">$$ \begin{gathered} D_1 = 4{,}0894\cdot 17 = 69{,}52 \\ D_2 = 4{,}0894\cdot 64 = 261{,}72 \\ D_3 = 4{,}0894\cdot 23 = 94{,}06 \\ D_4 = 4{,}0894\cdot 46 = 188{,}11 \\ D_5 = 4{,}0894\cdot 17 = 69{,}52 \\ D_6 = 4{,}0894\cdot 52 = 212{,}65 \end{gathered} $$</div></li>
 <li><strong>Relación total.</strong>
-<div class="f">$$ i = \frac{64}{17}\cdot\frac{48}{23}\cdot\frac{52}{17} $$</div>
-<div class="f">$$ i = 3{,}7647\cdot 2{,}0870\cdot 3{,}0588 = 24{,}03 $$</div></li>
+<div class="f">$$ i = \frac{64}{17}\cdot\frac{46}{23}\cdot\frac{52}{17} $$</div>
+<div class="f">$$ i = 3{,}7647\cdot 2\cdot 3{,}0588 = 23{,}03 $$</div></li>
 <li><strong>Velocidad de salida.</strong>
-<div class="f">$$ n_s = \frac{1200}{24{,}03} = 49{,}93\ \text{rpm} $$</div></li>
+<div class="f">$$ n_s = \frac{1200}{23{,}03} = 52{,}10\ \text{rpm} $$</div></li>
 <li><strong>Distancia entre centros.</strong>
 <div class="f">$$ C_e = \frac{D_1+D_2}{2} + \frac{D_3+D_4}{2} + \frac{D_5+D_6}{2} $$</div>
-<div class="f">$$ C_e = 165{,}62 + 145{,}17 + 141{,}08 = 451{,}87\ \text{mm} $$</div></li>
+<div class="f">$$ C_e = 165{,}62 + 141{,}09 + 141{,}08 = 447{,}79\ \text{mm} $$</div></li>
 <li><strong>Tipo de reductor.</strong> <strong>Helicoidal de 3 etapas</strong>, ejes paralelos.</li>
 </ol>
 
@@ -540,21 +566,21 @@ De D a E:
 <tr><td>Diámetro engrane 1</td><td class="num">69,52</td><td>mm</td></tr>
 <tr><td>Diámetro engrane 2</td><td class="num">261,72</td><td>mm</td></tr>
 <tr><td>Diámetro engrane 3</td><td class="num">94,06</td><td>mm</td></tr>
-<tr><td>Diámetro engrane 4</td><td class="num">196,29</td><td>mm</td></tr>
+<tr><td>Diámetro engrane 4</td><td class="num">188,11</td><td>mm</td></tr>
 <tr><td>Diámetro engrane 5</td><td class="num">69,52</td><td>mm</td></tr>
 <tr><td>Diámetro engrane 6</td><td class="num">212,65</td><td>mm</td></tr>
-<tr><td>Velocidad de salida n<sub>s</sub></td><td class="num">49,93</td><td>rpm</td></tr>
-<tr><td>Distancia entre centros C<sub>e</sub></td><td class="num">451,87</td><td>mm</td></tr>
+<tr><td>Velocidad de salida n<sub>s</sub></td><td class="num">52,10</td><td>rpm</td></tr>
+<tr><td>Distancia entre centros C<sub>e</sub></td><td class="num">447,79</td><td>mm</td></tr>
 <tr><td>Tipo de reductor</td><td colspan="2">helicoidal de 3 etapas (ejes paralelos)</td></tr>
 </tbody>
 </table>
 </div>
 
-<div class="resultado"><span class="r-lbl">Resultado:</span> <span class="r-val">m<sub>t</sub> = 4,0894 mm · i = 24,03 · n<sub>s</sub> = 49,93 rpm · C<sub>e</sub> = 451,87 mm</span></div>
+<div class="resultado"><span class="r-lbl">Resultado:</span> <span class="r-val">m<sub>t</sub> = 4,0894 mm · i = 23,03 · n<sub>s</sub> = 52,10 rpm · C<sub>e</sub> = 447,79 mm</span></div>
 
 <div class="caja idea">
-<p class="caja-tit">Chequeo rápido de la tabla</p>
-<p>La suma de todos los dientes es 17 + 64 + 23 + 48 + 17 + 52 = 221. La distancia total es m<sub>t</sub>·221/2 = 4,0894·110,5 = 451,9 mm. Es el atajo para no sumar las tres etapas por separado y detectar un error de tipeo.</p>
+<p class="caja-tit">Chequeo rápido</p>
+<p>La suma de dientes es 17 + 64 + 23 + 46 + 17 + 52 = 219. La distancia total es m<sub>t</sub>·219/2 = 4,0894·109,5 = 447,8 mm. Ese atajo sirve para detectar si copiaste mal un diámetro.</p>
 </div>
 
 <h2>Cómo se reparten los puntos y qué mirar primero</h2>
@@ -565,7 +591,7 @@ De D a E:
 <tbody>
 <tr><td>02/12/2025</td><td class="num">40</td><td class="num">30</td><td class="num">30</td><td class="num">100</td><td>80 min</td></tr>
 <tr><td>22/11/2022</td><td class="num">60</td><td class="num">40</td><td class="num">—</td><td class="num">100</td><td>60 min</td></tr>
-<tr><td>17/03/2026 (recup.)</td><td class="num">40</td><td class="num">30</td><td class="num">30</td><td class="num">100</td><td>80 min</td></tr>
+<tr><td>17/03/2026 (recup.)</td><td class="num">40</td><td class="num">30</td><td class="num">30</td><td class="num">100</td><td>70 min</td></tr>
 </tbody>
 </table>
 </div>

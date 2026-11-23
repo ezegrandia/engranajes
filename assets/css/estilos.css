@@ -855,6 +855,39 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   *{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
+/* ---------- Hojas de examen digitalizadas (A4) ---------- */
+.hojas-barra{
+  display:flex;flex-wrap:wrap;gap:.55rem 1.1rem;align-items:center;
+  margin:1rem 0 .75rem;padding:.55rem .7rem;border:1px solid var(--lin2);
+  border-radius:12px;background:var(--sup2);
+}
+.hojas-g{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
+.hojas-lbl{font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3)}
+.hoja-btn{
+  font-size:.72rem;font-weight:700;padding:.28rem .55rem;border:1px solid var(--lin2);
+  border-radius:99px;background:var(--sup);color:var(--txt2);cursor:pointer;
+}
+.hoja-btn:hover{border-color:var(--ac);color:var(--ac)}
+.hoja-btn.activo{background:var(--ac-soft);border-color:var(--ac);color:var(--ac)}
+.hoja-imprimir{background:var(--ac);border-color:var(--ac);color:#fff}
+.hoja-imprimir:hover{color:#fff;filter:brightness(1.08)}
+.hojas-acc{margin-left:auto}
+.hoja-link{font-size:.72rem;font-weight:700;color:var(--ac);text-decoration:none;border-bottom:1px dashed var(--ac);padding-bottom:1px}
+.hojas-marco{margin:0 0 1rem;border:1px solid var(--lin);border-radius:12px;overflow:hidden;background:#eef2f0}
+.hojas-marco iframe{display:block;width:100%;height:1160px;border:0;background:#eef2f0}
+.hojas-pie{font-size:.76rem;color:var(--txt3);line-height:1.45}
+.hojas-mini{margin:-.15rem 0 .9rem;font-size:.75rem;color:var(--txt3)}
+.hojas-mini a{color:var(--ac);font-weight:700;text-decoration:none;border-bottom:1px dashed var(--ac)}
+@media (max-width:620px){
+  .hojas-barra{gap:.45rem .7rem}
+  .hojas-acc{margin-left:0}
+  .hojas-marco iframe{height:520px}
+}
+@media print{
+  .hojas-barra,.hojas-pie{display:none!important}
+  .hojas-marco{display:none!important}
+}
+
 /* =========================================================================
    18. IMPRESIÓN — resumen en blanco y negro
    ========================================================================= */
