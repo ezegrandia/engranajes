@@ -90,7 +90,7 @@ Si preferís subir la carpeta tal cual, la URL será
 | **3 · Prácticos resueltos** | Ejercicio 1 (transmisión completa, 25 preguntas) · Ejercicio 2 (árbol con rodamientos) · Ejercicio 3 (módulo 2,5) · Ejercicio 4 (polea y 25 kW) · Ejercicios extra (planetarios y cónicos) |
 | **4 · Reductores** | Trenes de engranajes · Trenes epicicloidales · Tipos, construcción y lubricación · Práctico de reductores resuelto (7 problemas) |
 | **5 · Estudio** | Resumen imprimible (B/N) · Cuestionario (78 preguntas) · Preguntas de desarrollo (29) |
-| **6 · Chuletas** | Triángulos de despeje: los 38 triángulos de la materia, con las tres lecturas de cada uno |
+| **6 · Chuletas** | Triángulos de despeje: 39 de producto + 4 de suma (43 en total), con las tres lecturas de cada uno |
 | **7 · Exámenes resueltos** | 22/11/2022 · 02/12/2025 (Comisión B) · Recuperatorio 17/03/2026 (Comisión B), con la resolución completa paso a paso · **Hojas de examen A4** (en blanco y con resultados) |
 
 ### Funciones
@@ -123,7 +123,7 @@ Si preferís subir la carpeta tal cual, la URL será
 - **Diagramas** del cilindro desenrollado (ángulo de hélice, paso axial y avance), de los conos primitivos
   de un par cónico, del conjunto tornillo sin fin–corona, del diente modelado como viga en voladizo
   (hipótesis de Lewis) y de las disposiciones de rodamientos (O, X y fijo-libre).
-- **Triángulos de despeje** (sección *Chuletas*): los 38 triángulos mnemotécnicos de la materia
+- **Triángulos de despeje** (sección *Chuletas*): los 39 triángulos mnemotécnicos de producto + los 4 de suma
   (geometría, potencia y par, Lewis, trenes, planetarios, helicoidales y cónicos), cada uno con sus
   tres despejes, el **significado y la unidad de cada variable** ([mm], [rad/s], [N·m], [—]…) y una
   **★ en los 16 que más se usan en el examen**. Las celdas se pueden **tocar para taparlas**, cada
@@ -132,12 +132,14 @@ Si preferís subir la carpeta tal cual, la URL será
   fórmulas de suma, no para despejar. Arriba de todo hay un **filtro por variable**: tocás la m (o
   cualquier otra) y quedan solo los triángulos donde aparece, con un cartel que muestra el nombre y la unidad
   de la variable elegida y un botón **¿Qué es?** con la ficha completa (qué es, qué permite obtener, dónde vale y qué cuidado hay que tener).
+  Incluye la **holgura radial h<sub>r</sub> = 0,25m** como variable propia, separada del **huelgo circunferencial
+  h<sub>c</sub> = p<sub>c</sub>/50**.
   Tiene **atajos por categoría** (geometría, potencia, fuerzas, trenes, helicoidales y sumas): al tocarlos
   se iluminan las variables de esa sección **y se filtran los triángulos**, así quedan solo los de esa
   categoría (con el conteo en la cabecera) hasta elegir una variable o tocar **Ver todos**. Todo lo que es
   referencia —las reglas y el «cómo se lee», el porqué de los triángulos de suma, la chuleta de constantes y
   el checklist— va **plegado**, para que por defecto solo se vean los triángulos.
-  Tiene **dos versiones**: **Completa (42 tarjetas)** y **Condensada (17)**: un triángulo por familia y, en
+  Tiene **dos versiones**: **Completa (43 tarjetas)** y **Condensada (17)**: un triángulo por familia y, en
   un panel debajo, **las otras formas de calcular esa misma incógnita** (por ejemplo, en el del módulo:
   `m = p_c/π`, `m = 25,4/P_d`, `m = F/9,5`), cada tarjeta con su **Ver ejemplo**; la condensada imprime en
   **2 páginas** con las fórmulas al lado del triángulo. Las variables dentro del triángulo van **grandes y
@@ -203,7 +205,7 @@ assets/
   js/contenido-reductores.js  trenes y epicicloidales
   js/contenido-reductores2.js tipos/construcción, práctico resuelto, resumen
   js/contenido-quiz.js        bancos de preguntas y capítulos de estudio
-  js/contenido-triangulos.js  sección Chuletas: los 38 triángulos de despeje
+  js/contenido-triangulos.js  sección Chuletas: los 39 triángulos de despeje
   js/visuales.js              simuladores 2D (diente, par, tren, planetario, contacto)
   js/visuales3d.js            motor 3D + las 8 escenas (las 7 del práctico y el planetario)
   katex/                      KaTeX 0.16.11 (JS + CSS + fuentes), uso offline

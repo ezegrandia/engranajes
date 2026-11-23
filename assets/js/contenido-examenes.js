@@ -27,7 +27,7 @@
       control: 'Multiplicá todas las etapas y compará con n<sub>entrada</sub>/n<sub>salida</sub>. Si el resultado se va al doble o a la mitad, revisá si olvidaste una reducción o invertiste un cociente.'
     },
     geo: {
-      porque: 'La geometría del diente depende solo del módulo y del número de dientes: el primitivo es m·z, el de base proyecta ese primitivo por cos φ, y el adendo y el dedendo suman o restan múltiplos de m. Las holguras son 0,25m y p<sub>c</sub>/50 por criterio de cátedra.',
+      porque: 'La geometría del diente depende solo del módulo y del número de dientes: el primitivo es m·z, el de base proyecta ese primitivo por cos φ, y el adendo y el dedendo suman o restan múltiplos de m. La holgura radial es h<sub>r</sub> = 0,25m y la circunferencial h<sub>c</sub> = p<sub>c</sub>/50, por criterio de cátedra.',
       control: 'Comprobá que D<sub>e</sub> − D<sub>i</sub> = 4,5m y que D<sub>b</sub> &lt; D<sub>p</sub>. Un diámetro de base mayor que el primitivo o un dedendo mayor que el radio es señal de que se mezcló el módulo.'
     },
     lewis: {
@@ -208,7 +208,7 @@
        ['Resultado', T`n_4 = 6{,}1422\ \text{rpm} \qquad \omega_4 = 0{,}6432\ \text{rad/s}`]],
       'D8, D9 y el resultado del paso 3.');
     s += paso(5, 'Adendo, dedendo, paso y holguras (comunes a 1 y 2)',
-      'Como los dos engranes son del mismo módulo, comparten estas medidas. La holgura radial es 0,25·m y la circunferencial es p<sub>c</sub>/50 (criterio de cátedra).',
+      'Como los dos engranes son del mismo módulo, comparten estas medidas. La holgura radial es <strong>h<sub>r</sub> = 0,25·m</strong> y la circunferencial <strong>h<sub>c</sub> = p<sub>c</sub>/50</strong> (criterio de cátedra).',
       [['Fórmula', T`a = m \qquad b = 1{,}25\,m \qquad p_c = \pi\,m`],
        ['Reemplazo', T`a = 3 \qquad b = 1{,}25\cdot 3 \qquad p_c = \pi\cdot 3`],
        ['Resultado', T`a = 3\ \text{mm} \qquad b = 3{,}75\ \text{mm} \qquad p_c = 9{,}4248\ \text{mm}`],
@@ -253,7 +253,7 @@
       ['Diámetro de adendo', '57', '180', 'mm'],
       ['Diámetro de dedendo', '43,5', '166,5', 'mm'],
       ['Paso circular', '9,4248', '9,4248', 'mm'],
-      ['Holgura radial', '0,75', '0,75', 'mm'],
+      ['Holgura radial h<sub>r</sub>', '0,75', '0,75', 'mm'],
       ['Holgura circunferencial', '0,1885', '0,1885', 'mm']
     ]);
     s += res('C<sub>14</sub> = 286,5 mm · n<sub>4</sub> = 6,14 rpm · ω<sub>4</sub> = 0,643 rad/s');
@@ -442,7 +442,7 @@
        ['Resultado', T`D_{bA} = 56{,}38\ \text{mm} \qquad D_{bB} = 197{,}34\ \text{mm}`]],
       'Paso 1 y D2 (φ = 20°).');
     s += paso(3, 'Adendo, dedendo, paso y holguras (comunes a A y B)',
-      'Mismo módulo, mismas medidas para los dos. La holgura radial es 0,25·m y la circunferencial p<sub>c</sub>/50.',
+      'Mismo módulo, mismas medidas para los dos. La holgura radial es <strong>h<sub>r</sub> = 0,25·m</strong> y la circunferencial <strong>h<sub>c</sub> = p<sub>c</sub>/50</strong>.',
       [['Fórmula', T`a = m \qquad b = 1{,}25\,m \qquad p_c = \pi\,m`],
        ['Reemplazo', T`a = 3 \qquad b = 1{,}25\cdot 3 \qquad p_c = \pi\cdot 3`],
        ['Resultado', T`a = 3\ \text{mm} \qquad b = 3{,}75\ \text{mm} \qquad p_c = 9{,}4248\ \text{mm}`],
@@ -495,7 +495,7 @@
       ['Diámetro de adendo', '66', '216', 'mm'],
       ['Diámetro de dedendo', '52,5', '202,5', 'mm'],
       ['Paso circular', '9,4248', '9,4248', 'mm'],
-      ['Holgura radial', '0,75', '0,75', 'mm'],
+      ['Holgura radial h<sub>r</sub>', '0,75', '0,75', 'mm'],
       ['Holgura circunferencial', '0,1885', '0,1885', 'mm']
     ]);
     s += res('C<sub>14</sub> = 367 mm · n<sub>E</sub> = 114,29 rpm · ω<sub>E</sub> = 11,97 rad/s');
@@ -630,7 +630,7 @@
        ['Resultado', T`n_4 = 37{,}09\ \text{rpm} \qquad \omega_4 = 3{,}884\ \text{rad/s}`]],
       'D9, D10 y el paso 3.');
     s += paso(5, 'Adendo, dedendo, paso y holguras (comunes a 1 y 2)',
-      'Mismo módulo (2,5) para los dos. La holgura radial es 0,25·m y la circunferencial p<sub>c</sub>/50.',
+      'Mismo módulo (2,5) para los dos. La holgura radial es <strong>h<sub>r</sub> = 0,25·m</strong> y la circunferencial <strong>h<sub>c</sub> = p<sub>c</sub>/50</strong>.',
       [['Fórmula', T`a = m \qquad b = 1{,}25\,m \qquad p_c = \pi\,m`],
        ['Reemplazo', T`a = 2{,}5 \qquad b = 1{,}25\cdot 2{,}5 \qquad p_c = \pi\cdot 2{,}5`],
        ['Resultado', T`a = 2{,}5 \qquad b = 3{,}125 \qquad p_c = 7{,}854\ \text{mm}`],
@@ -671,7 +671,7 @@
       ['Diámetro de adendo', '42,5', '135', 'mm'],
       ['Diámetro de dedendo', '31,25', '123,75', 'mm'],
       ['Paso circular', '7,854', '7,854', 'mm'],
-      ['Holgura radial', '0,625', '0,625', 'mm'],
+      ['Holgura radial h<sub>r</sub>', '0,625', '0,625', 'mm'],
       ['Holgura circunferencial', '0,1571', '0,1571', 'mm']
     ]);
     s += res('C<sub>14</sub> = 273,75 mm · n<sub>4</sub> = 37,09 rpm · ω<sub>4</sub> = 3,884 rad/s');

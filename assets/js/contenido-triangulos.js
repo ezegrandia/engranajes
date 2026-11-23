@@ -37,7 +37,8 @@ window.CAPITULOS = window.CAPITULOS || [];
     px:    ["<i>p</i><sub>x</sub>", "paso axial del tornillo", "mm"],
     Pd:    ["<i>P</i><sub>d</sub>", "paso diametral", "1/pulg"],
     F:     ["<i>F</i>", "ancho de cara del diente", "mm"],
-    hc:    ["<i>h</i><sub>c</sub>", "huelgo circular (juego)", "mm"],
+    hc:    ["<i>h</i><sub>c</sub>", "huelgo circunferencial (juego lateral)", "mm"],
+    hr:    ["<i>h</i><sub>r</sub>", "holgura radial (clareo)", "mm"],
     t:     ["<i>t</i>", "espesor del diente (arco)", "mm"],
     phi:   ["<i>φ</i>", "ángulo de presión", "°"],
     psi:   ["<i>ψ</i>", "ángulo de hélice", "°"],
@@ -90,7 +91,8 @@ window.CAPITULOS = window.CAPITULOS || [];
     "Paso circular": { v: ["pc", "m"] },
     "Paso de base": { v: ["pb", "pc", "phi"] },
     "Diámetro de base": { v: ["Db", "Dp", "phi"] },
-    "Huelgo (cátedra)": { v: ["pc", "hc"] },
+    "Huelgo circunferencial": { v: ["pc", "hc"] },
+    "Holgura radial": { v: ["hr", "m"] },
     "Ancho de cara (Fanchon)": { v: ["F", "m"], star: 1 },
     "Paso diametral": { v: ["z", "Pd", "Dppulg"] },
     "Pulgada ↔ módulo": { v: ["Pd", "m"] },
@@ -308,7 +310,7 @@ window.CAPITULOS = window.CAPITULOS || [];
       String.raw`
 <div class="caja idea">
 <p class="caja-tit">Cuándo venís acá</p>
-<p>Si la fórmula tiene una <strong>suma o resta</strong>, una <strong>raíz</strong>, una <strong>potencia</strong> o <strong>más de tres letras</strong>, no hay triángulo que la resuelva: está acá, ya despejada. Todo lo que es solo producto y cociente vive en los 42 triángulos de arriba.</p>
+<p>Si la fórmula tiene una <strong>suma o resta</strong>, una <strong>raíz</strong>, una <strong>potencia</strong> o <strong>más de tres letras</strong>, no hay triángulo que la resuelva: está acá, ya despejada. Todo lo que es solo producto y cociente vive en los 43 triángulos de arriba.</p>
 <p class="aviso">No hace falta memorizar estas: alcanza con saber que existen y dónde están. Y el <strong>filtro de arriba también trabaja acá</strong>: si tocás una variable, este bloque se abre solo con las fórmulas que la usan.</p>
 </div>
 
@@ -652,10 +654,14 @@ window.CAPITULOS = window.CAPITULOS || [];
       u: "F = 9,5m (Fanchon medio, entre 7m y 12m). Entra en la tensión de Lewis y define cuánta carga aguanta.",
       t: "Todos.",
       o: "Primero se agranda F; el módulo es el último recurso." },
-    "hc": { q: "Huelgo circular (juego o backlash): la luz entre el diente y el valle de la otra rueda.",
+    "hr": { q: "Holgura radial (clareo): la luz entre la cabeza de un diente y el fondo del otro.",
+      u: "h<sub>r</sub> = 0,25m. Se mide en dirección radial y no depende del número de dientes.",
+      t: "Todos los engranajes de altura completa.",
+      o: "No confundir con hc: hc es el juego lateral (pc/50), c es la luz radial." },
+    "hc": { q: "Huelgo circunferencial (juego lateral o backlash): la luz entre flancos de dientes que engranan.",
       u: "hc = pc/50 ≈ 0,02pc. Evita que se trabe por dilatación o error de tallado.",
       t: "Todos.",
-      o: "No es el juego entre flancos: ese depende del espesor del diente." },
+      o: "No es la holgura radial: esa es h<sub>r</sub> = 0,25m." },
     "t": { q: "Espesor del diente: el arco de diente medido sobre la circunferencia primitiva.",
       u: "Con t y v se controla el juego lateral: t + v = pc. Sale de t = (pc − hc)/2.",
       t: "Dentado recto de altura completa (φ = 20°).",
@@ -815,7 +821,7 @@ window.CAPITULOS = window.CAPITULOS || [];
 
   var CHIPS_ORDEN = ["m", "mt", "mn", "z", "z1", "z2", "zcCond", "zcCor", "zm", "zs", "zsum",
     "Dp", "Dp1", "Dp2", "Db", "de", "di", "C", "ht", "ad", "ba",
-    "pc", "pb", "px", "Pd", "F", "hc", "t", "vac", "i", "n", "n1", "n2", "ne", "ns", "nsolar", "nps",
+    "pc", "pb", "px", "Pd", "F", "hc", "hr", "t", "vac", "i", "n", "n1", "n2", "ne", "ns", "nsolar", "nps",
     "w", "v", "r", "H", "HP", "Wpot", "T", "Te", "Ts", "Ps", "Pe", "Wt", "Wr", "Wa",
     "Kv", "sig", "St", "HB", "fseg", "Y", "Lab", "mc", "L", "Ao", "phi", "psi", "gam", "eta"];
 
@@ -872,8 +878,12 @@ window.CAPITULOS = window.CAPITULOS || [];
     ["Diámetro de base", T`D_b`, T`D_p`, T`\cos\varphi`,
       [T`D_b = D_p\cos\varphi`, T`D_p = \dfrac{D_b}{\cos\varphi}`, T`\cos\varphi = \dfrac{D_b}{D_p}`]],
 
-    ["Huelgo (cátedra)", T`p_c`, T`h_c`, T`50`,
+    ["Huelgo circunferencial", T`p_c`, T`h_c`, T`50`,
       [T`p_c = 50\,h_c`, T`h_c = \dfrac{p_c}{50}`], T`También $h_c \approx 0{,}02\,p_c$.`],
+
+    ["Holgura radial", T`h_r`, T`0{,}25`, T`m`,
+      [T`h_r = 0{,}25\,m`, T`m = \dfrac{h_r}{0{,}25} = 4h_r`],
+      T`Es la luz radial entre la cabeza de un diente y el fondo del otro. Usamos $h_r$ para no confundirla con la distancia entre centros $C$. No es el juego lateral: ese es $h_c = p_c/50$.`],
 
     ["Ancho de cara (Fanchon)", T`F`, T`9{,}5`, T`m`,
       [T`F = 9{,}5\,m`, T`m = \dfrac{F}{9{,}5}`], T`Rango válido: $7m \le F \le 12m$.`],
@@ -1035,9 +1045,13 @@ window.CAPITULOS = window.CAPITULOS || [];
       T`D_b = D_p\cos\varphi = 102\cdot 0{,}9397 = 95{,}85\ \text{mm}`,
       T`Siempre <strong>$D_b < D_p$</strong> (el diente trabaja desde la base).`),
 
-    "Huelgo (cátedra)": ej(T`<strong>m = 3</strong>: el paso vale $p_c = \pi\cdot 3 = 9{,}42$ mm.`,
+    "Huelgo circunferencial": ej(T`<strong>m = 3</strong>: el paso vale $p_c = \pi\cdot 3 = 9{,}42$ mm.`,
       T`h_c = \frac{p_c}{50} = \frac{9{,}42}{50} = 0{,}188\ \text{mm}`,
       T`Es la holgura que evita que el diente se trabe.`),
+
+    "Holgura radial": ej(T`Par de <strong>m = 2,5 mm</strong> (recuperatorio 17/03/2026).`,
+      T`h_r = 0{,}25\,m = 0{,}25\cdot 2{,}5 = 0{,}625\ \text{mm}`,
+      T`Es la luz radial; el juego lateral es $h_c = p_c/50 = 0{,}157\ \text{mm}$.`),
 
     "Ancho de cara (Fanchon)": ej(T`<strong>m = 6 mm</strong> (TP de engranajes).`,
       T`F = 9{,}5\,m = 9{,}5\cdot 6 = 57\ \text{mm} \qquad 7m = 42 \le F \le 72 = 12m`,
@@ -1256,14 +1270,14 @@ window.CAPITULOS = window.CAPITULOS || [];
       '<p class="bajada">Un triángulo por familia y las otras formas de calcular <strong>esa misma incógnita</strong>. Es la versión para tener todo en dos hojas.</p>' +
       '<div class="tris">' +
       CONDENSADAS.map(tarjetaCond).join("") +
-      String.raw`<div class="tri-card cond" data-vars="` + clavesDe("de di ht pc hc t vac m") + String.raw`">
+      String.raw`<div class="tri-card cond" data-vars="` + clavesDe("de di ht pc hc hr t vac m") + String.raw`">
 <h4>Medidas del diente</h4>
-<p class="cond-cap">sumas y restas</p>
+<p class="cond-cap">sumas, restas y holgura radial</p>
 <div class="tri-des">
 <span>$d_e = D_p+2m$</span><span>$d_i = D_p-2{,}5m$</span><span>$h_t = 2{,}25m$</span>
-<span>$p_c = \pi m$</span><span>$h_c = p_c/50$</span><span>$t = \dfrac{p_c-h_c}{2}$</span><span>$v = p_c-t$</span>
+<span>$p_c = \pi m$</span><span>$h_r = 0{,}25m$</span><span>$h_c = p_c/50$</span><span>$t = \dfrac{p_c-h_c}{2}$</span><span>$v = p_c-t$</span>
 </div>
-<p class="tri-nota">No tienen triángulo: se despejan a mano.</p>
+<p class="tri-nota">Las sumas/restas se despejan a mano; c y h<sub>c</sub> tienen su fórmula directa.</p>
 </div>` +
       "</div></section>";
   }
@@ -1272,7 +1286,7 @@ window.CAPITULOS = window.CAPITULOS || [];
   function barraModo() {
     return '<div class="tri-modo no-print" id="tri-modo">' +
       '<div class="g"><span class="g-tit">Versión:</span>' +
-      '<button type="button" class="tri-ver activo" data-ver="completa">Completa · 42</button>' +
+      '<button type="button" class="tri-ver activo" data-ver="completa">Completa · 43</button>' +
       '<button type="button" class="tri-ver" data-ver="cond">Condensada · 17</button></div>' +
       '<div class="g tri-print-opts"><span class="g-tit">Al imprimir:</span>' +
       '<label><input type="checkbox" data-ptri="titulo" checked> Título</label>' +
@@ -1318,7 +1332,7 @@ window.CAPITULOS = window.CAPITULOS || [];
 <div class="caja dato">
 <p class="caja-tit">Significado, unidad y estrellas</p>
 <ul>
-<li><strong class="tri-star">★</strong> = de los que más se usan en el examen y en los prácticos. Son <strong>16</strong> de los 38: si te sabés esos, aprobás.</li>
+<li><strong class="tri-star">★</strong> = de los que más se usan en el examen y en los prácticos. Son <strong>16</strong> de los 39: si te sabés esos, aprobás.</li>
 <li>Debajo de cada tarjeta está el <strong>significado y la unidad</strong> de cada variable: <strong>[mm]</strong> milímetros, <strong>[rad/s]</strong>, <strong>[rpm]</strong>, <strong>[N·m]</strong>, <strong>[N]</strong>, <strong>[MPa]</strong>, <strong>[W]</strong>, <strong>[°]</strong>, <strong>[1/pulg]</strong>.</li>
 <li><strong>[—]</strong> quiere decir que no tiene unidad: números de dientes, relaciones, factores y rendimientos.</li>
 <li>El símbolo <strong class="prod">∏</strong> es la <strong>productoria</strong> (Pi mayúscula): significa «multiplicá todos los términos». No confundir con <strong>π</strong> (pi minúscula), que es 3,1416.</li>
