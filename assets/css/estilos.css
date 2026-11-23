@@ -855,6 +855,76 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   *{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
+/* ---------- Índice y desplegables de exámenes ---------- */
+.examenes-indice{
+  margin:.9rem 0 1.1rem;padding:.6rem .75rem;border:1px solid var(--lin);
+  border-radius:12px;background:var(--sup2);
+}
+.indice-tit{margin:0 0 .3rem;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3)}
+.indice-fila{display:flex;flex-wrap:wrap;align-items:center;gap:.32rem;margin:.22rem 0}
+.indice-anio{min-width:6.6rem;font-size:.76rem;font-weight:800;color:var(--txt2)}
+.indice-fila a{
+  font-size:.68rem;font-weight:700;padding:.12rem .42rem;border-radius:99px;
+  border:1px solid var(--lin2);background:var(--sup);color:var(--ac);text-decoration:none;
+}
+.indice-fila a:hover{border-color:var(--ac);background:var(--ac-soft)}
+.indice-pie{margin:.35rem 0 0;font-size:.68rem;color:var(--txt3)}
+.tabla-tit{margin:1rem 0 .35rem;font-size:.9rem;font-weight:800;color:var(--txt)}
+
+.examen-plegable{
+  margin:1.2rem 0;border:1px solid var(--lin);border-radius:14px;
+  background:var(--sup);overflow:hidden;
+}
+.examen-sum{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.2rem .75rem;
+  padding:.75rem .95rem;cursor:pointer;list-style:none;background:var(--sup2);
+}
+.examen-sum::-webkit-details-marker{display:none}
+.examen-sum h2{
+  flex:1 1 100%;margin:0;padding:0;border:0;
+  font-size:1.22rem;line-height:1.25;letter-spacing:-.01em;
+}
+.examen-meta{font-size:.7rem;font-weight:700;color:var(--txt3)}
+.examen-sum::after,.ejercicio-sum::after{
+  content:"+";margin-left:auto;font-size:1.15rem;font-weight:800;color:var(--ac);
+  line-height:1;transition:transform .15s;
+}
+.examen-plegable[open] > .examen-sum::after,
+.ejercicio-plegable[open] > .ejercicio-sum::after{content:"−"}
+.examen-cuerpo{padding:.55rem .95rem 1rem}
+
+.ejercicio-plegable{
+  margin:.9rem 0;border:1px solid var(--lin2);border-radius:12px;
+  background:var(--sup);
+}
+.ejercicio-sum{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.2rem .65rem;
+  padding:.6rem .8rem;cursor:pointer;list-style:none;background:var(--sup2);
+  border-radius:11px;
+}
+.ejercicio-sum::-webkit-details-marker{display:none}
+.ejercicio-sum h3{
+  flex:1 1 auto;margin:0;padding:0;border:0;
+  font-size:.98rem;line-height:1.3;
+}
+.ejercicio-meta{font-size:.68rem;font-weight:700;color:var(--txt3)}
+.ejercicio-cuerpo{padding:.65rem .8rem .85rem}
+
+.paso-mas{
+  margin:.5rem 0 .05rem;padding:.25rem .55rem;border:1px dashed var(--lin2);
+  border-radius:8px;background:var(--sup2);
+}
+.paso-mas summary{
+  display:flex;align-items:center;gap:.35rem;cursor:pointer;list-style:none;
+  font-size:.71rem;font-weight:800;color:var(--ac);
+}
+.paso-mas summary::-webkit-details-marker{display:none}
+.paso-mas summary::before{content:"+";font-size:.9rem;line-height:1}
+.paso-mas[open] summary::before{content:"−"}
+.paso-mas-txt{padding:.25rem 0 .1rem;font-size:.79rem;line-height:1.58;color:var(--txt2)}
+.paso-mas-txt p{margin:.3rem 0}
+.paso-mas-txt strong{color:var(--txt)}
+
 /* ---------- Hoja de resolución paso a paso ---------- */
 .sol{margin:.8rem 0 1.4rem;padding-left:2.2rem;position:relative}
 .sol::before{
@@ -990,6 +1060,8 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   .sol-num{background:#000;color:#fff;box-shadow:none}
   .sol-paso{break-inside:avoid}
   .sol-tex{overflow:visible!important}
+  .paso-mas{display:none!important}
+  .examen-sum::after,.ejercicio-sum::after{display:none!important}
   .f-nota{color:#333}
   .katex{color:#000!important;font-size:1em}
   .resultado{background:#fff!important;border:.8pt solid #000;padding:3pt 6pt;break-inside:avoid}

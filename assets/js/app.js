@@ -103,7 +103,7 @@
           cap: c.id,
           capT: c.titulo,
           sec: h.textContent.trim(),
-          id: c.id + "--" + slug(h.textContent),
+          id: h.id || c.id + "--" + slug(h.textContent),
           txt: partes.join(" ").replace(/\s+/g, " ")
         });
       });
@@ -214,6 +214,11 @@
     if (sub) {
       var el = document.getElementById(cap.id + "--" + sub);
       if (el) {
+        var anc = el.parentElement;
+        while (anc) {
+          if (anc.tagName === "DETAILS") anc.open = true;
+          anc = anc.parentElement;
+        }
         setTimeout(function () { el.scrollIntoView({ block: "start", behavior: "instant" }); }, 30);
         return;
       }
@@ -285,7 +290,7 @@
   /* al imprimir, los desplegables se abren solos y después vuelven a su lugar */
   var plegados = null;
   function abrirPlegados() {
-    var ds = document.querySelectorAll("details");
+    var ds = document.querySelectorAll("details:not(.paso-mas)");
     plegados = [];
     Array.prototype.forEach.call(ds, function (d, i) {
       plegados[i] = d.open;
@@ -294,7 +299,7 @@
   }
   function cerrarPlegados() {
     if (!plegados) return;
-    var ds = document.querySelectorAll("details");
+    var ds = document.querySelectorAll("details:not(.paso-mas)");
     Array.prototype.forEach.call(ds, function (d, i) {
       if (plegados[i] === false) d.open = false;
     });
@@ -347,6 +352,13 @@
     fresado: { et: "Perfil cortado o fresado", kv: function (V) { return (6.1 + V) / 6.1; } },
     rectificado: { et: "Cepillado o esmerilado (rectificado)", kv: function (V) { return Math.sqrt((5.56 + Math.sqrt(V)) / 5.56); } },
     fundido: { et: "Fundición, perfil moldeado", kv: function (V) { return (3.05 + V) / 3.05; } }
+  };
+
+  /* --- Exámenes: envuelve exámenes y ejercicios en desplegables --- */
+  hooks.examenes = function (raiz) {
+    if (window.prepararExamenes) {
+      try { window.prepararExamenes(raiz); } catch (e) { console.error(e); }
+    }
   };
 
   /* --- Calculadora 1: módulo recomendado + verificación --- */

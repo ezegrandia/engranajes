@@ -20,7 +20,45 @@
       .map(function (p) { return '$$ ' + p + ' $$'; }).join(' ');
   }
 
-  function paso(n, titulo, exp, lineas, fuente) {
+  /* Explicaciones extensas por familia de cálculo. */
+  var FAM = {
+    vel: {
+      porque: 'Las velocidades se encadenan con la relación de transmisión: cada etapa multiplica por los dientes (o diámetros) del conductor y divide por los del conducido. Los ejes solidarios conservan su rpm; el cambio ocurre solo en el par que engrana.',
+      control: 'Multiplicá todas las etapas y compará con n<sub>entrada</sub>/n<sub>salida</sub>. Si el resultado se va al doble o a la mitad, revisá si olvidaste una reducción o invertiste un cociente.'
+    },
+    geo: {
+      porque: 'La geometría del diente depende solo del módulo y del número de dientes: el primitivo es m·z, el de base proyecta ese primitivo por cos φ, y el adendo y el dedendo suman o restan múltiplos de m. Las holguras son 0,25m y p<sub>c</sub>/50 por criterio de cátedra.',
+      control: 'Comprobá que D<sub>e</sub> − D<sub>i</sub> = 4,5m y que D<sub>b</sub> &lt; D<sub>p</sub>. Un diámetro de base mayor que el primitivo o un dedendo mayor que el radio es señal de que se mezcló el módulo.'
+    },
+    lewis: {
+      porque: 'Lewis compara la fuerza tangencial con la resistencia del diente. Y sale de la tabla según z, K<sub>v</sub> corrige por el proceso de tallado y la velocidad, y S<sub>t</sub> sale del material y la dureza. La cuenta es coherente si V está en m/s, F y m en mm, W<sub>t</sub> en N y σ en MPa.',
+      control: 'Verificá V (m/s), W<sub>t</sub> (N) y σ (MPa); f = S<sub>t</sub>/σ debe quedar ≥ 1,2. Si S<sub>t</sub> te queda en kPa o W<sub>t</sub> en kN, el factor se va de escala.'
+    },
+    hel: {
+      porque: 'En un helicoidal el módulo normal se mide en el plano normal al diente y el transversal en el plano del diámetro primitivo. La relación es m<sub>t</sub> = m<sub>n</sub>/cos ψ; como cos ψ &lt; 1, m<sub>t</sub> siempre es mayor que m<sub>n</sub>.',
+      control: 'Si m<sub>t</sub> te queda menor que m<sub>n</sub>, dividiste por el coseno al revés. Los diámetros se calculan con m<sub>t</sub>, no con m<sub>n</sub>.'
+    },
+    dist: {
+      porque: 'La distancia entre centros de un par es la semisuma de los diámetros primitivos, o sea la suma de los radios. Si hay ejes compartidos, las etapas se suman porque los centros están alineados.',
+      control: 'Sumá los radios de cada par; el total debe coincidir con la suma de todas las semisumas. Si te falta una etapa, la distancia queda corta.'
+    },
+    gen: {
+      porque: 'Cada paso usa una definición o una tabla de la cátedra; no hay que inventar fórmulas. Lo importante es identificar qué dato entra, en qué unidad está y qué se está despejando.',
+      control: 'Revisá que el dato sea el del par correcto, que la unidad sea la pedida y que el resultado tenga sentido físico (por ejemplo, una velocidad menor después de una reducción).'
+    }
+  };
+
+  function familia(t) {
+    if (/Módulo transversal/i.test(t)) return 'hel';
+    if (/tangencial|Carga|Factor|Esfuerzo|Tensión|seguridad/i.test(t)) return 'lewis';
+    if (/^Velocidad|Velocidad de|Salida del reductor/i.test(t)) return 'vel';
+    if (/Distancia entre centros/i.test(t)) return 'dist';
+    if (/Relación total/i.test(t)) return 'vel';
+    if (/Adendo|Diámetros|Módulo/i.test(t)) return 'geo';
+    return 'gen';
+  }
+
+  function paso(n, titulo, exp, lineas, fuente, larga) {
     var calc = '<div class="sol-calc">';
     lineas.forEach(function (l) {
       calc += '<div class="sol-linea' + (l[0] === 'Resultado' ? ' res' : '') + '">' +
@@ -28,11 +66,20 @@
         '<span class="sol-tex">' + bloques(l[1]) + '</span></div>';
     });
     calc += '</div>';
+    var fam = FAM[familia(titulo)];
+    var mas = '<details class="paso-mas"><summary>Explicación más extensa</summary>' +
+      '<div class="paso-mas-txt">' +
+      '<p><strong>Qué se hace en este paso:</strong> ' + exp + '</p>' +
+      (larga ? '<p>' + larga + '</p>' : '') +
+      '<p><strong>Por qué se plantea así:</strong> ' + fam.porque + '</p>' +
+      '<p><strong>Qué controlar:</strong> ' + fam.control + '</p>' +
+      '<p><strong>Datos que entran:</strong> ' + (fuente || '—') + '</p>' +
+      '</div></details>';
     return '<div class="sol-paso"><div class="sol-num">' + n + '</div>' +
       '<p class="sol-tit">' + titulo + '</p>' +
       '<p class="sol-exp">' + exp + '</p>' + calc +
       (fuente ? '<p class="sol-fuente"><b>De dónde sale:</b> ' + fuente + '</p>' : '') +
-      '</div>';
+      mas + '</div>';
   }
 
   function tabla(cabeceras, filas) {
@@ -65,6 +112,14 @@
 <p class="bajada">Los tres exámenes, resueltos como una hoja de alumno: <strong>un paso por cálculo</strong>, con la fórmula, el reemplazo, el resultado y <strong>de dónde sale cada dato</strong>. Cada ejercicio arranca con una tabla de datos numerados (D1, D2…) que después se cita en cada paso.</p>
 <p class="hojas-mini no-print">Las hojas para imprimir están en <a href="#hojas">Hojas de examen (A4)</a>: en blanco y con los resultados colocados.</p>
 
+<div class="examenes-indice no-print">
+<p class="indice-tit">Ir directo a un examen o ejercicio</p>
+<div class="indice-fila"><span class="indice-anio">02/12/2025</span><a href="#examenes/e2025">Examen</a><a href="#examenes/e2025-a">A</a><a href="#examenes/e2025-b">B</a><a href="#examenes/e2025-c">C</a></div>
+<div class="indice-fila"><span class="indice-anio">22/11/2022</span><a href="#examenes/e2022">Examen</a><a href="#examenes/e2022-a">A</a><a href="#examenes/e2022-b">B</a></div>
+<div class="indice-fila"><span class="indice-anio">17/03/2026</span><a href="#examenes/e2026">Examen</a><a href="#examenes/e2026-a">A</a><a href="#examenes/e2026-b">B</a><a href="#examenes/e2026-c">C</a></div>
+<p class="indice-pie">Cada examen y cada ejercicio están plegados: abrí solo el que querés leer.</p>
+</div>
+
 <div class="caja truco">
 <p class="caja-tit">Cómo leer esta resolución</p>
 <ol class="pasos">
@@ -86,6 +141,8 @@
 </ol>
 </div>
 
+
+
 <div class="caja dato">
 <p class="caja-tit">Antes de empezar</p>
 <p>Los datos están transcriptos de las hojas digitalizadas. Si en tu copia algún número no coincide, avisá y se corrige en la hoja y acá. Las respuestas manuscritas de las fotos no siempre son correctas: la referencia es esta resolución y la hoja con resultados.</p>
@@ -101,7 +158,7 @@
 <p class="bajada">80 minutos · A 40 pts, B 30 pts, C 30 pts. Tren con reductor sin fin-corona y cadena, Lewis del par 1–2 y reductor helicoidal de tres etapas.</p>
 <p class="hojas-mini no-print">Hoja A4: <a href="#hojas" onclick="hojaAbrir('2025','blank')">en blanco</a> · <a href="#hojas" onclick="hojaAbrir('2025','res')">con resultados</a></p>
 
-<h3>Ejercicio A · Tren del elevador (40 pts)</h3>
+<h3 id="examenes--e2025-a">Ejercicio A · Tren del elevador (40 pts)</h3>
 <p><strong>Qué pide:</strong> la geometría de los engranes 1 y 2 (m = 3), la distancia entre los centros 1 y 4 y la velocidad angular del engrane 4.</p>
 `;
 
@@ -181,7 +238,7 @@
       'Paso 6 (D<sub>p1</sub>), paso 7 (D<sub>p2</sub>), D8, D9 y D11 (m<sub>2</sub> = 4).');
     s += '</div>';
 
-    s += '<h3>Tabla para copiar en el examen</h3>';
+    s += '<p class="tabla-tit">Tabla para copiar en el examen</p>';
     s += tabla(['Ítem', 'Engrane 1', 'Engrane 2', 'Unidad'], [
       ['Adendo', '3', '3', 'mm'],
       ['Dedendo', '3,75', '3,75', 'mm'],
@@ -200,7 +257,7 @@
 
     /* ---- B ---- */
     s += T`
-<h3>Ejercicio B · Lewis del par 1–2 (30 pts)</h3>
+<h3 id="examenes--e2025-b">Ejercicio B · Lewis del par 1–2 (30 pts)</h3>
 <p><strong>Qué pide:</strong> V, W<sub>t</sub>, Y, K<sub>v</sub>, σ, S<sub>t</sub> y f<sub>seg</sub> para el par 1–2, con los datos del enunciado de B.</p>
 `;
     s += datos([
@@ -272,7 +329,7 @@
 
     /* ---- C ---- */
     s += T`
-<h3>Ejercicio C · Reductor helicoidal de 3 etapas (30 pts)</h3>
+<h3 id="examenes--e2025-c">Ejercicio C · Reductor helicoidal de 3 etapas (30 pts)</h3>
 <p><strong>Qué pide:</strong> completar m<sub>t</sub>, los seis diámetros, n<sub>s</sub>, C<sub>e</sub> y el tipo de reductor.</p>
 `;
     s += datos([
@@ -351,7 +408,7 @@
 <p class="bajada">60 minutos · A 60 pts, B 40 pts. Tren de cinco ruedas con engrane intermedio y Lewis del par D–E. No hay reductor helicoidal.</p>
 <p class="hojas-mini no-print">Hoja A4: <a href="#hojas" onclick="hojaAbrir('2022','blank')">en blanco</a> · <a href="#hojas" onclick="hojaAbrir('2022','res')">con resultados</a></p>
 
-<h3>Ejercicio A · Tren A-B-C-D-E (60 pts)</h3>
+<h3 id="examenes--e2022-a">Ejercicio A · Tren A-B-C-D-E (60 pts)</h3>
 <p><strong>Qué pide:</strong> geometría de A y B (m = 3), distancia entre los centros 1 y 4 y velocidad angular de E.</p>
 `;
     s += datos([
@@ -442,7 +499,7 @@
 
     /* ---- B ---- */
     s += T`
-<h3>Ejercicio B · Lewis del par D–E (40 pts)</h3>
+<h3 id="examenes--e2022-b">Ejercicio B · Lewis del par D–E (40 pts)</h3>
 <p><strong>Qué pide:</strong> V, W<sub>t</sub>, Y, K<sub>v</sub>, σ, S<sub>t</sub> y f<sub>seg</sub> para el par D–E.</p>
 `;
     s += datos([
@@ -523,7 +580,7 @@
 <p class="bajada">70 minutos · A 40 pts, B 30 pts, C 30 pts. Ojo con los datos: motor 1800 rpm, cadena ANSI 60 y engranes 15/52 y 19/76.</p>
 <p class="hojas-mini no-print">Hoja A4: <a href="#hojas" onclick="hojaAbrir('2026','blank')">en blanco</a> · <a href="#hojas" onclick="hojaAbrir('2026','res')">con resultados</a></p>
 
-<h3>Ejercicio A · Tren con poleas y cadena (40 pts)</h3>
+<h3 id="examenes--e2026-a">Ejercicio A · Tren con poleas y cadena (40 pts)</h3>
 <p><strong>Qué pide:</strong> geometría de los engranes 1 y 2 (m = 2,5), distancia entre los centros 1 y 4 y velocidad angular del engrane 4.</p>
 `;
     s += datos([
@@ -618,7 +675,7 @@
 
     /* ---- B ---- */
     s += T`
-<h3>Ejercicio B · Lewis del par 1–2 (30 pts)</h3>
+<h3 id="examenes--e2026-b">Ejercicio B · Lewis del par 1–2 (30 pts)</h3>
 <p><strong>Qué pide:</strong> V, W<sub>t</sub>, Y, K<sub>v</sub>, σ, S<sub>t</sub> y f<sub>seg</sub> para el par 1–2.</p>
 `;
     s += datos([
@@ -690,7 +747,7 @@
 
     /* ---- C ---- */
     s += T`
-<h3>Ejercicio C · Reductor helicoidal de 3 etapas (30 pts)</h3>
+<h3 id="examenes--e2026-c">Ejercicio C · Reductor helicoidal de 3 etapas (30 pts)</h3>
 <p><strong>Qué pide:</strong> m<sub>t</sub>, los seis diámetros, n<sub>s</sub>, C<sub>e</sub> y el tipo de reductor.</p>
 `;
     s += datos([
@@ -793,4 +850,92 @@
     titulo: "Exámenes resueltos (3)",
     html: H + examen2025() + examen2022() + examen2026() + cierre()
   });
+
+  /* Convierte los exámenes y los ejercicios en <details> plegables.
+     Se ejecuta después de insertar el capítulo (hook de app.js). */
+  window.prepararExamenes = function (raiz) {
+    if (!raiz || raiz.querySelector(".examen-plegable")) return;
+
+    var META = {
+      "examenes--e2025": "80 min · A 40 · B 30 · C 30",
+      "examenes--e2022": "60 min · A 60 · B 40",
+      "examenes--e2026": "70 min · A 40 · B 30 · C 30"
+    };
+
+    var h2s = Array.prototype.slice.call(raiz.querySelectorAll('h2[id^="examenes--e"]'));
+    h2s.forEach(function (h2) {
+      var det = document.createElement("details");
+      det.className = "examen-plegable";
+      var sum = document.createElement("summary");
+      sum.className = "examen-sum";
+      var cuerpo = document.createElement("div");
+      cuerpo.className = "examen-cuerpo";
+
+      h2.parentNode.insertBefore(det, h2);
+      det.appendChild(sum);
+      sum.appendChild(h2);
+      var meta = document.createElement("span");
+      meta.className = "examen-meta";
+      meta.textContent = META[h2.id] || "";
+      sum.appendChild(meta);
+      det.appendChild(cuerpo);
+
+      var next = det.nextSibling;
+      while (next && !(next.nodeType === 1 && next.tagName === "H2" && /^examenes--e/.test(next.id))) {
+        var after = next.nextSibling;
+        cuerpo.appendChild(next);
+        next = after;
+      }
+    });
+
+    Array.prototype.forEach.call(raiz.querySelectorAll(".examen-cuerpo"), function (cuerpo) {
+      var h3s = Array.prototype.filter.call(cuerpo.children, function (n) { return n.tagName === "H3"; });
+      h3s.forEach(function (h3) {
+        var det = document.createElement("details");
+        det.className = "ejercicio-plegable";
+        var sum = document.createElement("summary");
+        sum.className = "ejercicio-sum";
+        var cuerpoEj = document.createElement("div");
+        cuerpoEj.className = "ejercicio-cuerpo";
+
+        h3.parentNode.insertBefore(det, h3);
+        det.appendChild(sum);
+        sum.appendChild(h3);
+        det.appendChild(cuerpoEj);
+
+        var next = det.nextSibling;
+        while (next && !(next.nodeType === 1 && next.tagName === "H3")) {
+          var after = next.nextSibling;
+          cuerpoEj.appendChild(next);
+          next = after;
+        }
+
+        var pasos = cuerpoEj.querySelectorAll(".sol-paso").length;
+        var m = h3.textContent.match(/\((\d+)\s*pts?\)/i);
+        var meta = document.createElement("span");
+        meta.className = "ejercicio-meta";
+        meta.textContent = (m ? m[1] + " pts · " : "") + pasos + " pasos";
+        sum.appendChild(meta);
+      });
+    });
+  };
+
+  /* Si el hash ya es el mismo, el navegador no dispara hashchange:
+     abrimos igual los <details> necesarios. */
+  document.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="#examenes/"]') : null;
+    if (!a) return;
+    var h = a.getAttribute("href").slice(1);
+    var p = h.split("/");
+    if (p.length < 2) return;
+    var el = document.getElementById(p[0] + "--" + p[1]);
+    if (!el) return;
+    var anc = el.parentElement;
+    while (anc) {
+      if (anc.tagName === "DETAILS") anc.open = true;
+      anc = anc.parentElement;
+    }
+    setTimeout(function () { el.scrollIntoView({ block: "start" }); }, 40);
+  });
+
 })();

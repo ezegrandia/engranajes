@@ -159,6 +159,10 @@ Si preferís subir la carpeta tal cual, la URL será
   Al final de cada ejercicio están la **tabla para copiar en el examen** y un **chequeo** rápido. También
   incluye las trampas típicas (dientes confundidos, unidades, qué S<sub>t</sub> usar), el reparto de puntos
   y los cinco errores que más cuestan.
+- **Plegado por defecto**: los tres exámenes y sus ejercicios A/B/C arrancan **cerrados**; se abren con un
+  clic y hay un **índice superior** para saltar directo a un examen o a un ejercicio (el enlace abre los
+  desplegables que hagan falta). Dentro de cada paso, el botón **“Explicación más extensa”** despliega el
+  porqué de la fórmula, qué controlar y con qué datos se resolvió.
 - **Hojas de examen A4** (sección nueva): los tres exámenes **digitalizados**, con el mismo formato de la
   hoja que se entrega (A4, encabezado, tablas y esquemas vectoriales). Se pueden ver **en blanco** para
   resolverlos a mano o **con los resultados colocados** (valores en azul y sello RESUELTO), y se imprimen
