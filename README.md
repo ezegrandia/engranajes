@@ -153,11 +153,12 @@ Si preferís subir la carpeta tal cual, la URL será
   Notación cuidada: **V** (mayúscula) es la velocidad tangencial [m/s] y **v** (minúscula) el vacío del diente
   [mm]; ese aviso está en las reglas, en el formulario y en la teoría, y la calculadora muestra las dos filas.
 - **Exámenes resueltos** (sección nueva): tres exámenes reales de la cátedra —los finales del 02/12/2025 y
-  del 22/11/2022 y el recuperatorio del 17/03/2026— con el enunciado transcripto, la cadena cinemática, la
-  geometría del diente en tabla, Lewis/AGMA paso a paso y los reductores helicoidales completos. Cada
-  ejercicio tiene su **tabla de resultados** como la pide el examen, el **porqué** de cada fórmula y avisos
-  sobre las trampas típicas (dientes confundidos, unidades, qué S<sub>t</sub> usar). Arriba hay un índice de
-  los tres exámenes y al final, cómo se reparten los puntos y los cinco errores que más cuestan.
+  del 22/11/2022 y el recuperatorio del 17/03/2026— resueltos como una **hoja de alumno**: cada ejercicio
+  abre con una tabla de **datos numerados D1…Dn** (valor, unidad y de dónde sale) y sigue **un paso por
+  cálculo**, con tres renglones: **Fórmula → Reemplazo → Resultado**, más la fuente (“De dónde sale”) al pie.
+  Al final de cada ejercicio están la **tabla para copiar en el examen** y un **chequeo** rápido. También
+  incluye las trampas típicas (dientes confundidos, unidades, qué S<sub>t</sub> usar), el reparto de puntos
+  y los cinco errores que más cuestan.
 - **Hojas de examen A4** (sección nueva): los tres exámenes **digitalizados**, con el mismo formato de la
   hoja que se entrega (A4, encabezado, tablas y esquemas vectoriales). Se pueden ver **en blanco** para
   resolverlos a mano o **con los resultados colocados** (valores en azul y sello RESUELTO), y se imprimen

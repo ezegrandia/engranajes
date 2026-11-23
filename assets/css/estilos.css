@@ -855,6 +855,61 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   *{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
+/* ---------- Hoja de resolución paso a paso ---------- */
+.sol{margin:.8rem 0 1.4rem;padding-left:2.2rem;position:relative}
+.sol::before{
+  content:"";position:absolute;left:.8rem;top:.2rem;bottom:.2rem;
+  width:2px;background:var(--lin2);border-radius:2px;
+}
+.sol-paso{position:relative;margin:0 0 1.25rem;break-inside:avoid}
+.sol-num{
+  position:absolute;left:-2.2rem;top:-.1rem;width:1.6rem;height:1.6rem;border-radius:50%;
+  background:var(--ac);color:#fff;font-weight:800;font-size:.78rem;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 3px var(--bg);
+}
+.sol-tit{margin:0 0 .15rem;font-size:.98rem;font-weight:800;line-height:1.3}
+.sol-exp{margin:.1rem 0 .35rem;font-size:.86rem;line-height:1.55;color:var(--txt2);max-width:62ch}
+.sol-calc{
+  background:var(--sup2);border:1px solid var(--lin);border-radius:10px;
+  padding:.2rem .65rem;margin:.25rem 0 .3rem;
+}
+.sol-linea{
+  display:grid;grid-template-columns:5.4rem minmax(0,1fr);
+  gap:.6rem;align-items:center;padding:.28rem 0;
+}
+.sol-linea + .sol-linea{border-top:1px dashed var(--lin)}
+.sol-tag{font-size:.57rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3)}
+.sol-tex{min-width:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;text-align:left}
+.sol-tex .katex-display{margin:0;text-align:left!important}
+.sol-tex .katex-display + .katex-display{margin-top:.18rem}
+.sol-tex .katex-display>.katex{margin:0;text-align:left}
+.sol-tex .katex{font-size:1.02em}
+.sol-linea.res{margin:.05rem -.35rem;padding:.28rem .35rem;background:var(--ac-soft);border-radius:6px}
+.sol-linea.res .sol-tag{color:var(--ac)}
+.sol-linea.res .katex{color:var(--ac)}
+.sol-fuente{margin:.25rem 0 0;font-size:.74rem;line-height:1.45;color:var(--txt3)}
+.sol-fuente b{color:var(--txt2)}
+.sol-datos{margin:.6rem 0 1rem}
+.sol-datos td:last-child{font-size:.74rem;color:var(--txt3)}
+@media (max-width:620px){
+  .sol{padding-left:1.8rem}
+  .sol::before{left:.6rem}
+  .sol-num{left:-1.8rem;width:1.35rem;height:1.35rem;font-size:.68rem}
+  .sol-linea{grid-template-columns:1fr;gap:.1rem}
+  .sol-tag{font-size:.55rem}
+  .sol-tex .katex{font-size:.94em}
+  .sol-datos table,.sol-datos tbody,.sol-datos tr,.sol-datos td{display:block;width:100%}
+  .sol-datos thead{display:none}
+  .sol-datos tr{padding:.45rem .55rem;border-bottom:1px solid var(--lin)}
+  .sol-datos tr:last-child{border-bottom:0}
+  .sol-datos td{border:0;padding:.05rem 0;text-align:left}
+  .sol-datos td:first-child{display:inline-block;width:2.1rem;font-weight:800;color:var(--ac)}
+  .sol-datos td:nth-child(2){display:inline;font-weight:700}
+  .sol-datos td:nth-child(3){display:block;font-size:.82rem;padding-left:2.1rem}
+  .sol-datos td:last-child{display:block;font-size:.7rem;color:var(--txt3);padding-left:2.1rem}
+}
+
 /* ---------- Hojas de examen digitalizadas (A4) ---------- */
 .hojas-barra{
   display:flex;flex-wrap:wrap;gap:.55rem 1.1rem;align-items:center;
@@ -927,6 +982,14 @@ html.sin-scroll,html.sin-scroll body{overflow:hidden}
   .caja.idea,.caja.ojo,.caja.truco,.caja.dato{background:#fff!important}
   .caja.respuesta{border-left-width:2.5pt!important}
   .f{border:.8pt solid #000;padding:4pt 6pt;margin:5pt 0;break-inside:avoid;overflow:visible}
+  .sol-calc{background:#fff!important;border:.6pt solid #444;padding:1.5pt 4pt}
+  .sol-linea.res{background:#fff!important}
+  .sol-linea.res .katex,.sol-linea.res .sol-tag{color:#000!important}
+  .sol-exp{color:#111}
+  .sol-fuente{color:#333}
+  .sol-num{background:#000;color:#fff;box-shadow:none}
+  .sol-paso{break-inside:avoid}
+  .sol-tex{overflow:visible!important}
   .f-nota{color:#333}
   .katex{color:#000!important;font-size:1em}
   .resultado{background:#fff!important;border:.8pt solid #000;padding:3pt 6pt;break-inside:avoid}
