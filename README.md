@@ -67,6 +67,10 @@ Si preferís subir la carpeta tal cual, la URL será
 |---|
 | ![Versión condensada en pantalla](vista-condensada-pantalla.png) |
 
+| Exámenes resueltos: tres exámenes de la cátedra con la resolución paso a paso |
+|---|
+| ![Exámenes resueltos](vista-examenes.png) |
+
 | Resumen impreso en A4 (blanco y negro) |
 |---|
 | ![Resumen impreso](vista-impresion.png) |
@@ -83,6 +87,7 @@ Si preferís subir la carpeta tal cual, la URL será
 | **4 · Reductores** | Trenes de engranajes · Trenes epicicloidales · Tipos, construcción y lubricación · Práctico de reductores resuelto (7 problemas) |
 | **5 · Estudio** | Resumen imprimible (B/N) · Cuestionario (78 preguntas) · Preguntas de desarrollo (29) |
 | **6 · Chuletas** | Triángulos de despeje: los 38 triángulos de la materia, con las tres lecturas de cada uno |
+| **7 · Exámenes resueltos** | 02/12/2025 (Comisión B) · 22/11/2022 · Recuperatorio 17/03/2026 (Comisión B), con la resolución completa paso a paso |
 
 ### Funciones
 
@@ -143,12 +148,18 @@ Si preferís subir la carpeta tal cual, la URL será
   abre solo con las fórmulas que la contienen, con el conteo en la cabecera y sin salir de la sección.
   Notación cuidada: **V** (mayúscula) es la velocidad tangencial [m/s] y **v** (minúscula) el vacío del diente
   [mm]; ese aviso está en las reglas, en el formulario y en la teoría, y la calculadora muestra las dos filas.
+- **Exámenes resueltos** (sección nueva): tres exámenes reales de la cátedra —los finales del 02/12/2025 y
+  del 22/11/2022 y el recuperatorio del 17/03/2026— con el enunciado transcripto, la cadena cinemática, la
+  geometría del diente en tabla, Lewis/AGMA paso a paso y los reductores helicoidales completos. Cada
+  ejercicio tiene su **tabla de resultados** como la pide el examen, el **porqué** de cada fórmula y avisos
+  sobre las trampas típicas (dientes confundidos, unidades, qué S<sub>t</sub> usar). Arriba hay un índice de
+  los tres exámenes y al final, cómo se reparten los puntos y los cinco errores que más cuestan.
 - **Tablas que se apilan en el celular**: en pantallas chicas las tablas de fórmulas del formulario y la de
   nomenclatura de la portada se convierten en tarjetas (título, fórmula y observación), sin scroll horizontal.
 - **Buscador** de temas, fórmulas y secciones (atajo: `/`).
-- **Accesos rápidos** en la barra lateral, debajo del buscador: **Formulario completo** y **Triángulos de
-  despeje**, que son las dos páginas de consulta. Se marcan solas cuando estás en ese capítulo y, en el
-  celular, cierran el menú al tocarlas.
+- **Accesos rápidos** en la barra lateral, debajo del buscador: **Formulario completo**, **Triángulos de
+  despeje** y **Exámenes resueltos**, que son las páginas de consulta. Se marcan solas cuando estás en ese
+  capítulo y, en el celular, cierran el menú al tocarlas.
 - **Calculadoras interactivas**:
   - geometría completa de un par de engranajes;
   - predimensionamiento del módulo + verificación por Lewis;
